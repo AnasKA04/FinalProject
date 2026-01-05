@@ -4,7 +4,7 @@ import '../../../core/navigation/app_transitions.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/auth/auth_store.dart';
-import '../home/home_screen.dart';
+import '../main/main_nav_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key, required this.role});
@@ -52,13 +52,13 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     final user = result.user!;
     Navigator.of(context).pushAndRemoveUntil(
       AppTransitions.fadeSlide(
-        HomeScreen(
+        MainNavScreen(
           isAnonymous: false,
           role: user.role,
           displayName: user.displayName,
         ),
       ),
-      (route) => false,
+          (route) => false,
     );
   }
 

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/models/user_role.dart';
 import '../../../core/navigation/app_transitions.dart';
-import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_background.dart';
+import '../../../core/widgets/app_button.dart';
 import '../../../core/auth/auth_store.dart';
-import '../home/home_screen.dart';
+
+import '../main/main_nav_screen.dart';
 
 class SignUpFormScreen extends StatefulWidget {
   const SignUpFormScreen({super.key, required this.role});
@@ -29,9 +31,9 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
   }
 
   InputDecoration _dec(String label, IconData icon) => InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(icon),
-      );
+    labelText: label,
+    prefixIcon: Icon(icon),
+  );
 
   void _createAccount() {
     FocusScope.of(context).unfocus();
@@ -55,13 +57,13 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
     final user = result.user!;
     Navigator.of(context).pushAndRemoveUntil(
       AppTransitions.fadeSlide(
-        HomeScreen(
+        MainNavScreen(
           isAnonymous: false,
           role: user.role,
           displayName: user.displayName,
         ),
       ),
-      (route) => false,
+          (route) => false,
     );
   }
 
@@ -91,8 +93,8 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     "Create your $roleLabel account",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -104,6 +106,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     ),
                   ),
                   const SizedBox(height: 26),
+
                   TextFormField(
                     controller: _name,
                     decoration: _dec("Full Name", Icons.person_outline_rounded),
@@ -115,6 +118,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     },
                   ),
                   const SizedBox(height: 14),
+
                   TextFormField(
                     controller: _email,
                     keyboardType: TextInputType.emailAddress,
@@ -129,6 +133,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     },
                   ),
                   const SizedBox(height: 14),
+
                   TextFormField(
                     controller: _password,
                     obscureText: true,
@@ -140,6 +145,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                       return null;
                     },
                   ),
+
                   const SizedBox(height: 18),
                   AppButton(
                     label: "Create Account",

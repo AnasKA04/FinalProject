@@ -4,6 +4,8 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/navigation/app_transitions.dart';
 import '../auth/login_screen.dart';
+import '../main/main_nav_screen.dart';
+import '../../../core/models/user_role.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -25,6 +27,18 @@ class WelcomeScreen extends StatelessWidget {
                 child: _CalmHeroCard(),
               ),
               const SizedBox(height: 18),
+              AppButton(
+                label: "Continue as Anonymous",
+                isSecondary: true,
+                icon: Icons.visibility_off_rounded,
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    AppTransitions.fadeSlide(
+                      const MainNavScreen(isAnonymous: true, role: UserRole.patient),
+                    ),
+                  );
+                },
+              ),
               AppButton(
                 label: "Get Started",
                 icon: Icons.arrow_forward_rounded,
