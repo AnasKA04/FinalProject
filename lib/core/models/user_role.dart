@@ -1,5 +1,14 @@
-enum UserRole { therapist, patient }
+enum UserRole { admin, therapist, patient }
 
 extension UserRoleX on UserRole {
-  String get label => this == UserRole.therapist ? "Therapist" : "Patient";
+  String get label {
+    switch (this) {
+      case UserRole.admin:
+        return "Admin";
+      case UserRole.therapist:
+        return "Therapist";
+      case UserRole.patient:
+        return "Patient";
+    }
+  }
 }

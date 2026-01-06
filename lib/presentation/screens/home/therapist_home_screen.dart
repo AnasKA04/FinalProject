@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/app_background.dart';
 import '../therapist/therapist_inbox_screen.dart';
 import 'home_widgets.dart';
+import '../booking/therapist_requests_screen.dart';
 
 class TherapistHomeScreen extends StatelessWidget {
   const TherapistHomeScreen({super.key, required this.displayName});
@@ -37,11 +38,11 @@ class TherapistHomeScreen extends StatelessWidget {
 
             ActionCard(
               title: "Mood Check-in",
-              subtitle: "Quick daily reflection (UI only)",
+              subtitle: "Quick daily reflection ",
               icon: Icons.mood_rounded,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Mood Check-in (UI only for now)")),
+                  const SnackBar(content: Text("Mood Check-in ")),
                 );
               },
             ),
@@ -49,16 +50,32 @@ class TherapistHomeScreen extends StatelessWidget {
 
             ActionCard(
               title: "Breathing Exercise",
-              subtitle: "60 seconds calm breathing (UI only)",
+              subtitle: "60 seconds calm breathing ",
               icon: Icons.spa_rounded,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Breathing (UI only for now)")),
+                  const SnackBar(content: Text("Breathing ")),
                 );
               },
             ),
-
             const SizedBox(height: 22),
+
+            ActionCard(
+              title: "Booking Requests",
+              subtitle: "Accept or reject patient sessions",
+              icon: Icons.event_note_rounded,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const TherapistRequestsScreen(
+                      therapistId: "t1", // ✅ must match therapist profile id
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+
             const Text("Recent activity", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
             const SizedBox(height: 12),
 

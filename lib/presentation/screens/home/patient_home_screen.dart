@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/assessment/assessment_flow_screen.dart';
 import 'home_widgets.dart';
+import '../booking/therapist_list_screen.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   const PatientHomeScreen({super.key, required this.displayName});
@@ -37,11 +38,11 @@ class PatientHomeScreen extends StatelessWidget {
 
             ActionCard(
               title: "Mood Check-in",
-              subtitle: "Quick daily reflection (UI only)",
+              subtitle: "Quick daily reflection ",
               icon: Icons.mood_rounded,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Mood Check-in (UI only for now)")),
+                  const SnackBar(content: Text("Mood Check-in ")),
                 );
               },
             ),
@@ -49,16 +50,33 @@ class PatientHomeScreen extends StatelessWidget {
 
             ActionCard(
               title: "Breathing Exercise",
-              subtitle: "60 seconds calm breathing (UI only)",
+              subtitle: "60 seconds calm breathing ",
               icon: Icons.spa_rounded,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Breathing (UI only for now)")),
+                  const SnackBar(content: Text("Breathing ")),
                 );
               },
             ),
-
             const SizedBox(height: 22),
+
+            ActionCard(
+              title: "Book Your Session",
+              subtitle: "Choose a therapist and schedule a session",
+              icon: Icons.calendar_month_rounded,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => TherapistListScreen(
+                      patientId: "patient_1", // ✅ replace later with real id
+                      patientName: displayName,
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+
             const Text("Recent activity", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
             const SizedBox(height: 12),
 

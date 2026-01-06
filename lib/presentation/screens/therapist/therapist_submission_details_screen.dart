@@ -58,7 +58,7 @@ class TherapistSubmissionDetailsScreen extends StatelessWidget {
 
             const SizedBox(height: 6),
             AppButton(
-              label: "Open Chat (UI only)",
+              label: "Open Chat ",
               icon: Icons.chat_bubble_outline_rounded,
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(

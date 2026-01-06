@@ -21,8 +21,9 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = isAnonymous ? 'Anonymous' : (displayName ?? 'User');
-    final roleText = role == UserRole.therapist ? 'Therapist' : 'Patient';
-
+    final roleText = role == UserRole.admin
+        ? 'Admin'
+        : (role == UserRole.therapist ? 'Therapist' : 'Patient');
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -54,10 +55,10 @@ class ProfileScreen extends StatelessWidget {
                 context,
                 icon: Icons.privacy_tip_outlined,
                 title: 'Privacy',
-                subtitle: 'Control your data and visibility (UI)',
+                subtitle: 'Control your data and visibility ',
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Privacy (UI only)')),
+                    const SnackBar(content: Text('Privacy ')),
                   );
                 },
               ),
@@ -73,10 +74,10 @@ class ProfileScreen extends StatelessWidget {
                 context,
                 icon: Icons.help_outline,
                 title: 'Help & FAQ',
-                subtitle: 'Get help using the app (UI)',
+                subtitle: 'Get help using the app ',
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Help & FAQ (UI only)')),
+                    const SnackBar(content: Text('Help & FAQ ')),
                   );
                 },
               ),

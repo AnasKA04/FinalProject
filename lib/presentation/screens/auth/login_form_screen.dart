@@ -5,6 +5,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/auth/auth_store.dart';
 import '../main/main_nav_screen.dart';
+import '../main/admin_nav_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key, required this.role});
@@ -50,19 +51,22 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     }
 
     final user = result.user!;
-    Navigator.of(context).pushAndRemoveUntil(
-      AppTransitions.fadeSlide(
-        MainNavScreen(
+
+    final next = (user.role == UserRole.admin)
+        ? AdminNavScreen(displayName: user.displayName)
+        : MainNavScreen(
           isAnonymous: false,
           role: user.role,
           displayName: user.displayName,
-        ),
-      ),
+        );
+
+    Navigator.of(context).pushAndRemoveUntil(
+      AppTransitions.fadeSlide(next),
           (route) => false,
     );
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     final roleLabel = widget.role.label;
 
@@ -151,3 +155,4 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     );
   }
 }
+

@@ -35,11 +35,11 @@ class AnonymousHomeScreen extends StatelessWidget {
 
             ActionCard(
               title: "Mood Check-in",
-              subtitle: "Quick daily reflection (UI only)",
+              subtitle: "Quick daily reflection ",
               icon: Icons.mood_rounded,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Mood Check-in (UI only for now)")),
+                  const SnackBar(content: Text("Mood Check-in")),
                 );
               },
             ),
@@ -47,11 +47,11 @@ class AnonymousHomeScreen extends StatelessWidget {
 
             ActionCard(
               title: "Breathing Exercise",
-              subtitle: "60 seconds calm breathing (UI only)",
+              subtitle: "60 seconds calm breathing",
               icon: Icons.spa_rounded,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Breathing (UI only for now)")),
+                  const SnackBar(content: Text("Breathing ")),
                 );
               },
             ),

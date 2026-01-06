@@ -69,6 +69,21 @@ class AuthStore {
     seedDemoAccountsIfEmpty();
 
     final normalizedEmail = email.trim().toLowerCase();
+
+    // ✅ Admin can login from ANY role screen
+    const adminEmail = "admin@gmail.com";
+    const adminPass = "admin1234";
+
+    if (normalizedEmail == adminEmail && password == adminPass) {
+      final adminUser = AppUser(
+        role: UserRole.admin,
+        displayName: "Admin",
+        email: adminEmail,
+        password: adminPass,
+      );
+      return AuthResult.success(adminUser);
+    }
+
     final user = _usersByEmail[normalizedEmail];
 
     if (user == null) {
