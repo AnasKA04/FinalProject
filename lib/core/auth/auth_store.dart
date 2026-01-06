@@ -71,7 +71,7 @@ class AuthStore {
     final normalizedEmail = email.trim().toLowerCase();
 
     // ✅ Admin can login from ANY role screen
-    const adminEmail = "admin@gmail.com";
+    const adminEmail = "admin@psycare.app";
     const adminPass = "admin1234";
 
     if (normalizedEmail == adminEmail && password == adminPass) {

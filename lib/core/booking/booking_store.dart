@@ -11,7 +11,7 @@ class BookingStore {
   final List<TherapistProfile> _therapists = const [
     TherapistProfile(
       id: "t1",
-      name: "Dr. Sara Al-Khateeb",
+      name: "Dr. Anas Al-Ayasrah",
       rating: 4.8,
       ratingCount: 214,
       locationText: "Jordan, Amman",
@@ -27,7 +27,7 @@ class BookingStore {
     ),
     TherapistProfile(
       id: "t2",
-      name: "Dr. Ahmad Al-Majali",
+      name: "Dr. Lo'ay Al-Alawneh",
       rating: 4.6,
       ratingCount: 167,
       locationText: "Jordan, Amman",
