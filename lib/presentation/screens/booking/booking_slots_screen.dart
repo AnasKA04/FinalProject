@@ -4,6 +4,7 @@ import '../../../core/booking/booking_models.dart';
 import 'payment_screen.dart';
 import 'package:psycare/serviece/auth_serviece.dart';
 import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BookingSlotsScreen extends StatelessWidget {
   const BookingSlotsScreen({
@@ -18,6 +19,9 @@ class BookingSlotsScreen extends StatelessWidget {
   final String patientId;
   final String patientName;
   final SessionType type;
+  final u = FirebaseAuth.instance.currentUser;
+  final patientId = u?.uid ?? '';
+  final patientName = u?.email ?? 'Patient';
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +43,10 @@ class BookingSlotsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => PaymentScreen(
-                    therapistId: therapistId,
-                    patientId: patientId,
-                    patientName: patientName,
-                    type: type,
-                    slot: s,
+                  builder: (_) => TherapistsFirestoreScreen(
+                    type: type,               // the session type you already have
+                    patientId: patientId,     // current user id
+                    patientName: patientName, // current user name
                   ),
                 ),
               );
