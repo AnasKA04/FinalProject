@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'create_slot_page.dart';
 import 'my_slots_page.dart';
+import 'booking_requests_page.dart';
+
 
 class TherapistHomePage extends StatelessWidget {
   const TherapistHomePage({super.key});
@@ -39,13 +40,13 @@ class TherapistHomePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                child: const Text('View My Slots'),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const MySlotsPage()),
+                    MaterialPageRoute(builder: (_) => const BookingRequestsPage()),
                   );
                 },
+                child: const Text('Booking Requesflutts'),
               ),
             ),
           ],
