@@ -3,6 +3,8 @@ import '../../../core/widgets/app_background.dart';
 import '../../../core/assessment/assessment_flow_screen.dart';
 import 'home_widgets.dart';
 import '../booking/therapist_list_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   const PatientHomeScreen({super.key, required this.displayName});

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/assessment/assessment_flow_screen.dart';
 import 'home_widgets.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class AnonymousHomeScreen extends StatelessWidget {
   const AnonymousHomeScreen({super.key});

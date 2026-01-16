@@ -7,6 +7,8 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/auth/auth_store.dart';
 
 import '../main/main_nav_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import '../../main/main_nav_screen.dart'; // adjust path
 
 class SignUpFormScreen extends StatefulWidget {
   const SignUpFormScreen({super.key, required this.role});
@@ -35,36 +37,42 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
     prefixIcon: Icon(icon),
   );
 
-  void _createAccount() {
+  Future<void> _createAccount() async {
     FocusScope.of(context).unfocus();
 
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    final result = AuthStore.instance.signUp(
-      role: widget.role,
-      displayName: _name.text,
-      email: _email.text,
-      password: _password.text,
-    );
+    final auth = AuthService();
 
-    if (!result.isSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result.error ?? "Sign up failed.")),
+    try {
+      await auth.signUpEmailPassword(
+        email: _email.text.trim(),
+        password: _password.text,
+        fullName: _name.text.trim(),
+        role: widget.role, // UserRole.patient or UserRole.therapist
       );
-      return;
-    }
 
-    final user = result.user!;
-    Navigator.of(context).pushAndRemoveUntil(
-      AppTransitions.fadeSlide(
-        MainNavScreen(
-          isAnonymous: false,
-          role: user.role,
-          displayName: user.displayName,
+      // Optional: fetch name again from Firestore if you want
+      final fullName = await auth.getCurrentUserFullName();
+
+      if (!mounted) return;
+
+      Navigator.of(context).pushAndRemoveUntil(
+        AppTransitions.fadeSlide(
+          MainNavScreen(
+            isAnonymous: false,
+            role: widget.role,
+            displayName: fullName ?? _name.text.trim(),
+          ),
         ),
-      ),
-          (route) => false,
-    );
+            (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign up failed: $e')),
+      );
+    }
   }
 
   @override

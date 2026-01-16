@@ -6,6 +6,8 @@ import '../../../core/widgets/app_background.dart';
 import '../../../core/auth/auth_store.dart';
 import '../main/main_nav_screen.dart';
 import '../main/admin_nav_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key, required this.role});
@@ -33,37 +35,39 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       );
 
   void _login() {
-    FocusScope.of(context).unfocus();
-
-    if (!(_formKey.currentState?.validate() ?? false)) return;
-
-    final result = AuthStore.instance.login(
-      role: widget.role,
-      email: _email.text,
-      password: _password.text,
-    );
-
-    if (!result.isSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result.error ?? "Login failed.")),
-      );
-      return;
-    }
-
-    final user = result.user!;
-
-    final next = (user.role == UserRole.admin)
-        ? AdminNavScreen(displayName: user.displayName)
-        : MainNavScreen(
-          isAnonymous: false,
-          role: user.role,
-          displayName: user.displayName,
+    Future<void> _login() async {
+      final auth = AuthService();
+      try {
+        await auth.loginEmailPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text,
         );
 
-    Navigator.of(context).pushAndRemoveUntil(
-      AppTransitions.fadeSlide(next),
-          (route) => false,
-    );
+        // Get role from Firestore (source of truth)
+        final role = await auth.getCurrentUserRole();
+
+        // Optional: get full name if you want it in UI
+        final fullName = await auth.getCurrentUserFullName();
+
+        if (!mounted) return;
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (_) => MainNavScreen(
+              isAnonymous: false,
+              role: role,
+              displayName: fullName,
+            ),
+          ),
+              (route) => false,
+        );
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login failed: $e')),
+        );
+      }
+    }
   }
 
     @override

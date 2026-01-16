@@ -37,6 +37,19 @@ class AuthService {
       'role': role.value,
       'createdAt': FieldValue.serverTimestamp(),
     }, SetOptions(merge: true));
+    if (role == UserRole.therapist) {
+      await _db.collection('therapists').doc(uid).set({
+        'fullName': fullName.trim(),
+        'createdAt': FieldValue.serverTimestamp(),
+        'ratingAvg': 0.0,
+        'ratingCount': 0,
+        'locationText': '',
+        'locationUrl': '',
+        'bio': '',
+        'specialties': <String>[],
+        'therapiesCount': 0,
+      }, SetOptions(merge: true));
+    }
 
     return cred;
   }
@@ -65,4 +78,5 @@ class AuthService {
     final roleStr = (data['role'] as String?) ?? '';
     return UserRoleX.fromString(roleStr);
   }
+
 }

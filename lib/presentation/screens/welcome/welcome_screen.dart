@@ -6,6 +6,8 @@ import '../../../core/navigation/app_transitions.dart';
 import '../auth/login_screen.dart';
 import '../main/main_nav_screen.dart';
 import '../../../core/models/user_role.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

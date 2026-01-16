@@ -5,6 +5,8 @@ import '../../../core/theme/app_colors.dart';
 
 import '../settings/settings_screen.dart';
 import '../auth/login_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({

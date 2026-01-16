@@ -4,6 +4,8 @@ import '../../../core/models/user_role.dart';
 import 'patient_home_screen.dart';
 import 'therapist_home_screen.dart';
 import 'anonymous_home_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({

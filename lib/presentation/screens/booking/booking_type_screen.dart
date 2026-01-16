@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/booking/booking_models.dart';
 import 'booking_slots_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class BookingTypeScreen extends StatelessWidget {
   const BookingTypeScreen({

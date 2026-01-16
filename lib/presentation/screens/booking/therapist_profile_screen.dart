@@ -4,6 +4,8 @@ import '../../../core/booking/booking_models.dart';
 import '../../../core/chat/store.dart';
 import '../chat/chat_list_screen.dart';
 import 'booking_type_screen.dart';
+import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/serviece/booking_serviece.dart';
 
 class TherapistProfileScreen extends StatelessWidget {
   const TherapistProfileScreen({
