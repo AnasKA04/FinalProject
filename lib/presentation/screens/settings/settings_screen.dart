@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/theme/app_colors.dart';
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -12,7 +9,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  // Local settings (no extra packages needed)
+  // Local settings (demo only)
   bool _darkMode = false;
   bool _pushNotifications = true;
   bool _sounds = true;
@@ -25,16 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.surface,
-        elevation: 0,
-        title: const Text(
-          'Settings',
-          style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.text),
-        ),
-        iconTheme: const IconThemeData(color: AppColors.text),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         children: [
@@ -57,9 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
-
           const SizedBox(height: 14),
-
           _sectionTitle('Notifications'),
           _card(
             children: [
@@ -88,9 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
-
           const SizedBox(height: 14),
-
           _sectionTitle('Privacy & Security'),
           _card(
             children: [
@@ -118,9 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
-
           const SizedBox(height: 14),
-
           _sectionTitle('Support'),
           _card(
             children: [
@@ -139,25 +121,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
-
-          const SizedBox(height: 18),
-
-          _card(
-            children: [
-              _navTile(
-                icon: Icons.logout,
-                title: 'Log out',
-                subtitle: 'Return to login screen',
-                danger: true,
-                onTap: () {
-                  // IMPORTANT: keep your existing logout logic in home_screen.dart if you already have it.
-                  // Here we just pop back.
-                  Navigator.of(context).pop();
-                  _snack('Logout action should be handled from Home screen.');
-                },
-              ),
-            ],
-          ),
         ],
       ),
     );
@@ -170,10 +133,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w800,
-          color: AppColors.textMuted,
+          fontWeight: FontWeight.w900,
+          color: AppColors.textSecondary,
         ),
       ),
     );
@@ -201,6 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _divider() =>
       const Divider(height: 1, thickness: 1, color: AppColors.border);
 
+  // ✅ FIXED: no placeholders, real title/subtitle
   Widget _switchTile({
     required IconData icon,
     required String title,
@@ -211,26 +175,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return SwitchListTile.adaptive(
       value: value,
       onChanged: onChanged,
-      activeColor: AppColors.primary,
+      activeColor: AppColors.primaryTeal,
       secondary: Container(
         width: 38,
         height: 38,
         decoration: BoxDecoration(
-          color: AppColors.primarySoft,
+          color: AppColors.primaryTeal.withOpacity(0.12),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(icon, color: AppColors.primary),
+        child: Icon(icon, color: AppColors.primaryTeal),
       ),
       title: Text(
         title,
         style: const TextStyle(
-          fontWeight: FontWeight.w800,
-          color: AppColors.text,
+          fontWeight: FontWeight.w900,
+          color: AppColors.textPrimary,
         ),
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(color: AppColors.textMuted),
+        style: const TextStyle(color: AppColors.textSecondary),
       ),
     );
   }
@@ -242,8 +206,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     required VoidCallback onTap,
     bool danger = false,
   }) {
-    final titleColor = danger ? const Color(0xFFB42318) : AppColors.text;
-    final iconColor = danger ? const Color(0xFFB42318) : AppColors.primary;
+    const dangerColor = Color(0xFFB42318);
+    const dangerBg = Color(0xFFFEE4E2);
+
+    final titleColor = danger ? dangerColor : AppColors.textPrimary;
+    final iconColor = danger ? dangerColor : AppColors.primaryTeal;
+    final bgColor =
+    danger ? dangerBg : AppColors.primaryTeal.withOpacity(0.12);
 
     return ListTile(
       onTap: onTap,
@@ -251,23 +220,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
         width: 38,
         height: 38,
         decoration: BoxDecoration(
-          color: danger ? const Color(0xFFFEE4E2) : AppColors.primarySoft,
+          color: bgColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(icon, color: iconColor),
       ),
       title: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.w800, color: titleColor),
+        style: TextStyle(
+          fontWeight: FontWeight.w900,
+          color: titleColor,
+        ),
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(color: AppColors.textMuted),
+        style: const TextStyle(color: AppColors.textSecondary),
       ),
-      trailing: const Icon(
-        Icons.chevron_right_rounded,
-        color: AppColors.textMuted,
-      ),
+      trailing: const Icon(Icons.chevron_right_rounded,
+          color: AppColors.textSecondary),
     );
   }
 
@@ -281,6 +251,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
       builder: (_) => _bottomSheetPicker(
+        context: context,
         title: 'Language',
         items: const ['English', 'Arabic', 'Spanish', 'Greek'],
         selected: _language,
@@ -298,6 +269,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
       builder: (_) => _bottomSheetPicker(
+        context: context,
         title: 'Privacy mode',
         items: const [
           'Standard',
@@ -312,6 +284,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _bottomSheetPicker({
+    required BuildContext context,
     required String title,
     required List<String> items,
     required String selected,
@@ -338,7 +311,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w900,
-                  color: AppColors.text,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),
@@ -351,15 +324,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   e,
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
-                    color: isSelected ? AppColors.primary : AppColors.text,
+                    color: isSelected
+                        ? AppColors.primaryTeal
+                        : AppColors.textPrimary,
                   ),
                 ),
                 trailing: isSelected
-                    ? const Icon(Icons.check_circle, color: AppColors.primary)
-                    : const Icon(
-                        Icons.circle_outlined,
-                        color: AppColors.textMuted,
-                      ),
+                    ? const Icon(Icons.check_circle, color: AppColors.primaryTeal)
+                    : const Icon(Icons.circle_outlined,
+                    color: AppColors.textSecondary),
               );
             }),
           ],
@@ -375,11 +348,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: AppColors.surface,
         title: const Text(
           'Clear local data?',
-          style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.text),
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            color: AppColors.textPrimary,
+          ),
         ),
         content: const Text(
           'This will reset settings on this device. It will not delete your account.',
-          style: TextStyle(color: AppColors.textMuted),
+          style: TextStyle(color: AppColors.textSecondary, height: 1.35),
         ),
         actions: [
           TextButton(
@@ -387,9 +363,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: const Text('Cancel'),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFFB42318),
-            ),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () {
               setState(() {
                 _darkMode = false;
@@ -417,12 +391,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: AppColors.surface,
         title: const Text(
           'About PsyCare',
-          style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.text),
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            color: AppColors.textPrimary,
+          ),
         ),
         content: const Text(
-          'PsyCare is a mental wellness app prototype.\n\n'
-          'Includes assessment flow, therapist review, and chat.',
-          style: TextStyle(color: AppColors.textMuted),
+          'PsyCare is a mental wellness app prototype.\n\nIncludes assessment flow, therapist review, and chat.',
+          style: TextStyle(color: AppColors.textSecondary, height: 1.35),
         ),
         actions: [
           TextButton(
@@ -435,6 +411,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _snack(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating),
+    );
   }
 }

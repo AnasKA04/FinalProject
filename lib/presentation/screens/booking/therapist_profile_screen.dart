@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../core/booking/booking_store.dart';
+
 import '../../../core/booking/booking_models.dart';
+import '../../../core/booking/booking_store.dart';
 import '../../../core/chat/store.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/app_button.dart';
 import '../chat/chat_list_screen.dart';
 import 'booking_type_screen.dart';
 
@@ -28,31 +31,35 @@ class TherapistProfileScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _header(context, therapist),
+          _header(therapist),
           const SizedBox(height: 14),
 
           _infoCard(
-            context,
             title: "Contact",
             children: [
               _row("Phone", therapist.phoneNumber),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               _row("Location", therapist.locationText),
-              const SizedBox(height: 6),
-              _row("Maps link", therapist.locationUrl),
+              const SizedBox(height: 8),
+              _linkRow("Maps link", therapist.locationUrl),
             ],
           ),
 
           const SizedBox(height: 12),
 
           _infoCard(
-            context,
             title: "Qualifications",
             children: therapist.qualifications
                 .map(
                   (q) => Padding(
                 padding: const EdgeInsets.only(bottom: 6),
-                child: Text("• $q"),
+                child: Text(
+                  "• $q",
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    height: 1.25,
+                  ),
+                ),
               ),
             )
                 .toList(),
@@ -61,11 +68,10 @@ class TherapistProfileScreen extends StatelessWidget {
           const SizedBox(height: 12),
 
           _infoCard(
-            context,
             title: "Prices",
             children: [
               _row("On-site", "\$${therapist.priceOnsite}"),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               _row("Video call", "\$${therapist.priceVideo}"),
             ],
           ),
@@ -75,7 +81,10 @@ class TherapistProfileScreen extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: OutlinedButton.icon(
+                child: AppButton(
+                  label: "Chat",
+                  isSecondary: true,
+                  icon: Icons.chat_bubble_outline_rounded,
                   onPressed: () {
                     final store = ChatStore.instance;
 
@@ -91,13 +100,13 @@ class TherapistProfileScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.chat_bubble_outline_rounded),
-                  label: const Text("Chat"),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: FilledButton.icon(
+                child: AppButton(
+                  label: "Book now",
+                  icon: Icons.calendar_month_rounded,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -106,14 +115,10 @@ class TherapistProfileScreen extends StatelessWidget {
                           therapistId: therapistId,
                           patientId: patientId,
                           patientName: patientName,
-                          // If BookingTypeScreen accepts type, pass it.
-                          // If it does NOT, remove this line.
                         ),
                       ),
                     );
                   },
-                  icon: const Icon(Icons.calendar_month_rounded),
-                  label: const Text("Book now"),
                 ),
               ),
             ],
@@ -123,27 +128,51 @@ class TherapistProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _header(BuildContext context, TherapistProfile t) {
+  Widget _header(TherapistProfile t) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-        color: Theme.of(context).colorScheme.surface,
+        border: Border.all(color: AppColors.border),
+        color: AppColors.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 14,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Row(
         children: [
-          CircleAvatar(radius: 28, child: Text(t.name.isNotEmpty ? t.name[0] : "T")),
+          CircleAvatar(
+            radius: 28,
+            backgroundColor: AppColors.primaryTeal.withOpacity(0.12),
+            child: Text(
+              t.name.isNotEmpty ? t.name[0].toUpperCase() : "T",
+              style: const TextStyle(
+                fontWeight: FontWeight.w900,
+                color: AppColors.primaryTeal,
+              ),
+            ),
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(t.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+                Text(
+                  t.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   "${t.locationText} • ⭐ ${t.rating} (${t.ratingCount})",
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  style: const TextStyle(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -153,22 +182,27 @@ class TherapistProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _infoCard(
-      BuildContext context, {
-        required String title,
-        required List<Widget> children,
-      }) {
+  Widget _infoCard({
+    required String title,
+    required List<Widget> children,
+  }) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-        color: Theme.of(context).colorScheme.surface,
+        border: Border.all(color: AppColors.border),
+        color: AppColors.surface,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w900)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w900,
+              color: AppColors.textPrimary,
+            ),
+          ),
           const SizedBox(height: 10),
           ...children,
         ],
@@ -178,9 +212,53 @@ class TherapistProfileScreen extends StatelessWidget {
 
   Widget _row(String a, String b) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: Text(a, style: const TextStyle(fontWeight: FontWeight.w800))),
-        Expanded(child: Text(b)),
+        Expanded(
+          child: Text(
+            a,
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            b,
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              height: 1.25,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _linkRow(String a, String url) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(
+            a,
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            url,
+            style: const TextStyle(
+              color: AppColors.primaryTeal,
+              height: 1.25,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
       ],
     );
   }

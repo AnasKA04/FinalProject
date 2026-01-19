@@ -2,81 +2,152 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-  static ThemeData light({Color? seedColor}) => _build(
-        brightness: Brightness.light,
-        seedColor: seedColor ?? AppColors.seed,
-      );
+  static ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
 
-  static ThemeData dark({Color? seedColor}) => _build(
-        brightness: Brightness.dark,
-        seedColor: seedColor ?? AppColors.seed,
-      );
+    scaffoldBackgroundColor: AppColors.scaffoldBackground,
 
-  static ThemeData _build({required Brightness brightness, required Color seedColor}) {
-    final base = ThemeData(
-      useMaterial3: true,
-      brightness: brightness,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: seedColor,
-        brightness: brightness,
-      ),
-    );
-
-    // Overwrite key roles to keep the palette aligned with the app brand.
-    final cs = base.colorScheme.copyWith(
+    // ✅ Strong ColorScheme (prevents purple defaults)
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AppColors.primaryTeal,
+      brightness: Brightness.light,
+    ).copyWith(
       primary: AppColors.primaryTeal,
-      secondary: AppColors.secondaryIndigo,
-      tertiary: AppColors.tertiarySea,
-      background: brightness == Brightness.light ? AppColors.background : base.colorScheme.background,
-      surface: brightness == Brightness.light ? AppColors.surface : base.colorScheme.surface,
-    );
+      secondary: AppColors.tertiarySea,
+      tertiary: AppColors.secondaryIndigo,
+      surface: AppColors.surface,
+      error: AppColors.error,
+    ),
 
-    return base.copyWith(
-      colorScheme: cs,
-      scaffoldBackgroundColor: cs.background,
-      appBarTheme: AppBarTheme(
-        backgroundColor: Colors.transparent,
+    // ✅ Makes icons follow teal instead of purple/black in random places
+    iconTheme: const IconThemeData(color: AppColors.primaryTeal),
+
+    // ✅ AppBar unified
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.primaryTeal,
+      foregroundColor: Colors.white,
+      elevation: 0,
+      centerTitle: true,
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
+
+    // ✅ FAB unified
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppColors.primaryTeal,
+      foregroundColor: Colors.white,
+    ),
+
+    // ✅ Progress indicators unified
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: AppColors.primaryTeal,
+    ),
+
+    // ✅ Cards unified
+    cardTheme: CardTheme(
+      color: AppColors.surface,
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: AppColors.border),
+      ),
+    ),
+
+    // ✅ ElevatedButton unified
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primaryTeal,
+        foregroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
-        foregroundColor: cs.onSurface,
-      ),
-      textTheme: base.textTheme.apply(
-        bodyColor: cs.onSurface,
-        displayColor: cs.onSurface,
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        // Softer fill for a “card-like” input feel.
-        fillColor: brightness == Brightness.light
-            ? AppColors.surfaceSoft
-            : cs.surfaceContainerHighest,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: cs.outlineVariant),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: cs.outlineVariant),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: cs.primary, width: 1.6),
-        ),
-      ),
-      cardTheme: CardThemeData(
-        color: cs.surface,
-        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-          side: BorderSide(color: cs.outlineVariant),
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
-      dividerTheme: DividerThemeData(color: cs.outlineVariant),
-      snackBarTheme: SnackBarThemeData(
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: cs.inverseSurface,
-        contentTextStyle: TextStyle(color: cs.onInverseSurface),
+    ),
+
+    // ✅ OutlinedButton unified
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: AppColors.primaryTeal,
+        side: const BorderSide(color: AppColors.primaryTeal),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
-    );
-  }
+    ),
+
+    // ✅ TextButton unified
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors.primaryTeal,
+      ),
+    ),
+
+    // ✅ TextField unified (this is where purple often appears)
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.border),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.border),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.primaryTeal, width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.error),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.error, width: 2),
+      ),
+      labelStyle: const TextStyle(color: AppColors.textSecondary),
+      hintStyle: const TextStyle(color: AppColors.textSecondary),
+    ),
+
+    // ✅ BottomNavigationBar unified (very common purple area)
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: AppColors.primaryTeal,
+      unselectedItemColor: AppColors.textSecondary,
+      backgroundColor: Colors.white,
+      type: BottomNavigationBarType.fixed,
+      showUnselectedLabels: true,
+    ),
+
+    // ✅ Divider
+    dividerTheme: const DividerThemeData(
+      color: AppColors.border,
+      thickness: 1,
+    ),
+
+    // ✅ Typography unified
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: AppColors.textPrimary,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        color: AppColors.textSecondary,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 13,
+        color: AppColors.textSecondary,
+      ),
+    ),
+  );
 }

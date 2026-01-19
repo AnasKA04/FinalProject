@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/models/user_role.dart';
 import '../../../core/navigation/app_transitions.dart';
 import '../../../core/theme/app_colors.dart';
@@ -16,6 +17,8 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textMuted = AppColors.textSecondary;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sign Up"),
@@ -33,15 +36,19 @@ class SignUpScreen extends StatelessWidget {
               const SizedBox(height: 10),
               const Text(
                 "Create account",
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.textPrimary,
+                ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 "Choose your role to continue.",
                 style: TextStyle(
                   fontSize: 14.5,
                   height: 1.5,
-                  color: AppColors.textMuted,
+                  color: textMuted,
                 ),
               ),
               const SizedBox(height: 22),
@@ -61,6 +68,7 @@ class SignUpScreen extends StatelessWidget {
               ),
 
               const Spacer(),
+
               AppButton(
                 label: "Back",
                 isSecondary: true,
@@ -90,13 +98,15 @@ class _RoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
     return InkWell(
       borderRadius: BorderRadius.circular(22),
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: AppColors.border),
           boxShadow: [
@@ -113,11 +123,11 @@ class _RoleCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColors.primarySoft.withOpacity(0.45),
+                color: cs.primary.withOpacity(0.10),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.border),
               ),
-              child: Icon(icon, color: AppColors.primary),
+              child: Icon(icon, color: cs.primary),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -126,7 +136,11 @@ class _RoleCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.w800),
+                    style: const TextStyle(
+                      fontSize: 16.5,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -134,14 +148,17 @@ class _RoleCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 13.5,
                       height: 1.35,
-                      color: AppColors.textMuted,
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(width: 10),
-            const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.textSecondary,
+            ),
           ],
         ),
       ),

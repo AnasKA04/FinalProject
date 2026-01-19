@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
-/// Clean, theme-aware background used across screens.
-///
-/// The target look is “wellness app”: mostly neutral and bright, with a subtle
-/// top tint that pairs nicely with teal/indigo accents.
+/// Clean, unified background used across screens.
+/// Uses AppColors only to avoid any Material3 color-scheme surprises.
 class AppBackground extends StatelessWidget {
   const AppBackground({super.key, required this.child});
 
@@ -11,11 +10,9 @@ class AppBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-
     return Stack(
       children: [
-        // Soft top-tint gradient (kept very subtle to resemble Wysa-style UIs)
+        // Base background + subtle top tint
         Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
@@ -23,9 +20,9 @@ class AppBackground extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  cs.primary.withOpacity(0.08),
-                  cs.background,
-                  cs.background,
+                  AppColors.primaryTeal.withOpacity(0.08),
+                  AppColors.scaffoldBackground,
+                  AppColors.scaffoldBackground,
                 ],
                 stops: const [0.0, 0.35, 1.0],
               ),
@@ -33,7 +30,7 @@ class AppBackground extends StatelessWidget {
           ),
         ),
 
-        // A very light “wash” on the bottom for depth
+        // Soft bottom wash for depth
         Positioned(
           left: 0,
           right: 0,
@@ -46,7 +43,7 @@ class AppBackground extends StatelessWidget {
                   radius: 1.2,
                   center: const Alignment(0.0, 0.0),
                   colors: [
-                    cs.tertiary.withOpacity(0.10),
+                    AppColors.tertiarySea.withOpacity(0.12),
                     Colors.transparent,
                   ],
                 ),
@@ -55,7 +52,7 @@ class AppBackground extends StatelessWidget {
           ),
         ),
 
-        // Foreground
+        // Foreground content
         Positioned.fill(child: child),
       ],
     );

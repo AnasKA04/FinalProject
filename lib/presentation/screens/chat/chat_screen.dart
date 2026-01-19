@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/chat/store.dart';
 import '../../../core/chat/chat_models.dart';
+import '../../../core/chat/store.dart';
+import '../../../core/theme/app_colors.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatId;
@@ -29,11 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
 
     // Auto-scroll to bottom when screen opens
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scroll.hasClients) {
-        _scroll.jumpTo(_scroll.position.maxScrollExtent);
-      }
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom(jump: true));
   }
 
   @override
@@ -43,13 +40,19 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  void _scrollToBottom() {
+  void _scrollToBottom({bool jump = false}) {
     if (!_scroll.hasClients) return;
-    _scroll.animateTo(
-      _scroll.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOut,
-    );
+    final offset = _scroll.position.maxScrollExtent;
+
+    if (jump) {
+      _scroll.jumpTo(offset);
+    } else {
+      _scroll.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   void _send() {
@@ -65,13 +68,12 @@ class _ChatScreenState extends State<ChatScreen> {
     );
 
     setState(() {});
-    Future.delayed(const Duration(milliseconds: 50), _scrollToBottom);
+    Future.delayed(const Duration(milliseconds: 40), () => _scrollToBottom());
   }
 
   @override
   Widget build(BuildContext context) {
     final messages = _store.messagesForChat(widget.chatId);
-    final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -97,15 +99,27 @@ class _ChatScreenState extends State<ChatScreen> {
                       maxWidth: MediaQuery.of(context).size.width * 0.78,
                     ),
                     decoration: BoxDecoration(
-                      color: isMe ? cs.primary : cs.surface,
+                      color: isMe ? AppColors.primaryTeal : AppColors.surface,
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: cs.outlineVariant),
+                      border: Border.all(
+                        color: isMe ? Colors.transparent : AppColors.border,
+                      ),
+                      boxShadow: isMe
+                          ? []
+                          : [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.03),
+                          blurRadius: 10,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
                     ),
                     child: Text(
                       m.content,
                       style: TextStyle(
-                        color: isMe ? cs.onPrimary : cs.onSurface,
+                        color: isMe ? Colors.white : AppColors.textPrimary,
                         height: 1.3,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -113,6 +127,8 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
+
+          // Input area
           SafeArea(
             top: false,
             child: Padding(
@@ -124,31 +140,19 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: _controller,
                       minLines: 1,
                       maxLines: 4,
+
+                      // ✅ Let theme control borders/focus (teal)
                       decoration: InputDecoration(
                         hintText: 'Type a message…',
-                        filled: true,
-                        fillColor: cs.surface,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide(color: cs.outlineVariant),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide(color: cs.outlineVariant),
+                        suffixIcon: IconButton(
+                          onPressed: _send,
+                          icon: const Icon(Icons.send_rounded),
+                          color: AppColors.primaryTeal,
                         ),
                       ),
+
                       onSubmitted: (_) => _send(),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    onPressed: _send,
-                    icon: const Icon(Icons.send_rounded),
-                    color: cs.primary,
                   ),
                 ],
               ),

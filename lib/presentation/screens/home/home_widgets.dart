@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
+import '../../../core/theme/app_colors.dart';
 
 class GreetingCard extends StatelessWidget {
   const GreetingCard({super.key, required this.name, required this.subtitle});
@@ -10,14 +9,14 @@ class GreetingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
+    final primary = AppColors.primaryTeal;
 
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: cs.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: cs.outlineVariant),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -32,11 +31,11 @@ class GreetingCard extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: cs.primaryContainer.withOpacity(0.55),
+              color: primary.withOpacity(0.10),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: cs.outlineVariant),
+              border: Border.all(color: AppColors.border),
             ),
-            child: Icon(Icons.favorite_rounded, color: cs.primary),
+            child: Icon(Icons.favorite_rounded, color: primary),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -48,12 +47,16 @@ class GreetingCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   subtitle,
-                  style: TextStyle(color: cs.onSurfaceVariant, height: 1.35),
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    height: 1.35,
+                  ),
                 ),
               ],
             ),
@@ -80,7 +83,7 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
+    final primary = AppColors.primaryTeal;
 
     return InkWell(
       borderRadius: BorderRadius.circular(22),
@@ -88,9 +91,16 @@ class ActionCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: cs.surface,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: cs.outlineVariant),
+          border: Border.all(color: AppColors.border),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 14,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -98,11 +108,11 @@ class ActionCard extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: cs.primaryContainer.withOpacity(0.55),
+                color: primary.withOpacity(0.10),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: cs.outlineVariant),
+                border: Border.all(color: AppColors.border),
               ),
-              child: Icon(icon, color: cs.primary),
+              child: Icon(icon, color: primary),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -114,17 +124,24 @@ class ActionCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 15.5,
                       fontWeight: FontWeight.w800,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     subtitle,
-                    style: TextStyle(color: cs.onSurfaceVariant, height: 1.3),
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      height: 1.3,
+                    ),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded, color: cs.onSurfaceVariant),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.textSecondary,
+            ),
           ],
         ),
       ),
@@ -146,18 +163,16 @@ class InfoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: cs.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: cs.outlineVariant),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         children: [
-          Icon(icon, color: cs.onSurfaceVariant),
+          Icon(icon, color: AppColors.primaryTeal),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -165,12 +180,18 @@ class InfoTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   subtitle,
-                  style: TextStyle(color: cs.onSurfaceVariant, height: 1.3),
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    height: 1.3,
+                  ),
                 ),
               ],
             ),

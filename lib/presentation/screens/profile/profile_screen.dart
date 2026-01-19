@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/models/user_role.dart';
 import '../../../core/theme/app_colors.dart';
-
-import '../settings/settings_screen.dart';
 import '../auth/login_screen.dart';
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
+import '../settings/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -26,9 +23,11 @@ class ProfileScreen extends StatelessWidget {
     final roleText = role == UserRole.admin
         ? 'Admin'
         : (role == UserRole.therapist ? 'Therapist' : 'Patient');
+
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         children: [
@@ -39,7 +38,6 @@ class ProfileScreen extends StatelessWidget {
           _card(
             children: [
               _navTile(
-                context,
                 icon: Icons.settings_outlined,
                 title: 'Settings',
                 subtitle: 'Appearance, privacy, notifications',
@@ -52,14 +50,16 @@ class ProfileScreen extends StatelessWidget {
               ),
               const Divider(height: 1, thickness: 1, color: AppColors.border),
               _navTile(
-                context,
                 icon: Icons.privacy_tip_outlined,
                 title: 'Privacy',
-                subtitle: 'Control your data and visibility ',
+                subtitle: 'Control your data and visibility',
                 onTap: () {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(const SnackBar(content: Text('Privacy ')));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Privacy'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
                 },
               ),
             ],
@@ -71,19 +71,20 @@ class ProfileScreen extends StatelessWidget {
           _card(
             children: [
               _navTile(
-                context,
                 icon: Icons.help_outline,
                 title: 'Help & FAQ',
-                subtitle: 'Get help using the app ',
+                subtitle: 'Get help using the app',
                 onTap: () {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(const SnackBar(content: Text('Help & FAQ ')));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Help & FAQ'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
                 },
               ),
               const Divider(height: 1, thickness: 1, color: AppColors.border),
               _navTile(
-                context,
                 icon: Icons.info_outline,
                 title: 'About',
                 subtitle: 'App information',
@@ -97,14 +98,13 @@ class ProfileScreen extends StatelessWidget {
           _card(
             children: [
               _dangerTile(
-                context,
                 icon: Icons.logout_rounded,
                 title: 'Log out',
                 subtitle: 'Return to login screen',
                 onTap: () {
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (_) => const LoginScreen()),
-                    (route) => false,
+                        (route) => false,
                   );
                 },
               ),
@@ -122,11 +122,14 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: AppColors.surface,
         title: const Text(
           'About PsyCare',
-          style: TextStyle(fontWeight: FontWeight.w900),
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            color: AppColors.textPrimary,
+          ),
         ),
         content: const Text(
           'Prototype app with assessment flow, therapist review, and chat.\n\nVersion: 1.0',
-          style: TextStyle(color: AppColors.textMuted),
+          style: TextStyle(color: AppColors.textSecondary, height: 1.35),
         ),
         actions: [
           TextButton(
@@ -150,8 +153,8 @@ class ProfileScreen extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 22,
-            backgroundColor: AppColors.primarySoft,
-            child: const Icon(Icons.person, color: AppColors.primary),
+            backgroundColor: AppColors.primaryTeal.withOpacity(0.12),
+            child: const Icon(Icons.person, color: AppColors.primaryTeal),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -162,13 +165,14 @@ class ProfileScreen extends StatelessWidget {
                   name,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Role: $roleText',
-                  style: const TextStyle(color: AppColors.textMuted),
+                  style: const TextStyle(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -185,8 +189,8 @@ class ProfileScreen extends StatelessWidget {
         t,
         style: const TextStyle(
           fontSize: 13.5,
-          fontWeight: FontWeight.w800,
-          color: AppColors.textMuted,
+          fontWeight: FontWeight.w900,
+          color: AppColors.textSecondary,
         ),
       ),
     );
@@ -203,8 +207,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _navTile(
-    BuildContext context, {
+  Widget _navTile({
     required IconData icon,
     required String title,
     required String subtitle,
@@ -216,36 +219,36 @@ class ProfileScreen extends StatelessWidget {
         width: 38,
         height: 38,
         decoration: BoxDecoration(
-          color: AppColors.primarySoft,
+          color: AppColors.primaryTeal.withOpacity(0.12),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(icon, color: AppColors.primary),
+        child: Icon(icon, color: AppColors.primaryTeal),
       ),
       title: Text(
         title,
         style: const TextStyle(
-          fontWeight: FontWeight.w800,
-          color: AppColors.text,
+          fontWeight: FontWeight.w900,
+          color: AppColors.textPrimary,
         ),
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(color: AppColors.textMuted),
+        style: const TextStyle(color: AppColors.textSecondary),
       ),
       trailing: const Icon(
         Icons.chevron_right_rounded,
-        color: AppColors.textMuted,
+        color: AppColors.textSecondary,
       ),
     );
   }
 
-  Widget _dangerTile(
-    BuildContext context, {
+  Widget _dangerTile({
     required IconData icon,
     required String title,
     required String subtitle,
     required VoidCallback onTap,
   }) {
+    // still safe, readable “danger” styling
     const danger = Color(0xFFB42318);
     const dangerBg = Color(0xFFFEE4E2);
 
@@ -266,7 +269,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(color: AppColors.textMuted),
+        style: const TextStyle(color: AppColors.textSecondary),
       ),
     );
   }

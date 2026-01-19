@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_background.dart';
+
+import '../../../core/models/user_role.dart';
 import '../../../core/navigation/app_transitions.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/app_background.dart';
+import '../../../core/widgets/app_button.dart';
 import '../auth/login_screen.dart';
 import '../main/main_nav_screen.dart';
-import '../../../core/models/user_role.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final textMuted = AppColors.textSecondary;
+
     return Scaffold(
       body: AppBackground(
         child: SafeArea(
@@ -21,10 +24,11 @@ class WelcomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 8),
-                _Header(),
+                const _Header(),
                 const SizedBox(height: 26),
-                Expanded(child: _CalmHeroCard()),
+                const Expanded(child: _CalmHeroCard()),
                 const SizedBox(height: 18),
+
                 AppButton(
                   label: "Continue as Anonymous",
                   isSecondary: true,
@@ -40,21 +44,23 @@ class WelcomeScreen extends StatelessWidget {
                     );
                   },
                 ),
+
                 AppButton(
                   label: "Get Started",
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () {
-                    Navigator.of(
-                      context,
-                    ).push(AppTransitions.fadeSlide(const LoginScreen()));
+                    Navigator.of(context).push(
+                      AppTransitions.fadeSlide(const LoginScreen()),
+                    );
                   },
                 ),
+
                 const SizedBox(height: 10),
                 Text(
                   "By continuing, you agree to a calm and safe experience.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: const Color.fromARGB(255, 29, 70, 128),
+                    color: textMuted,
                     fontSize: 12.5,
                   ),
                 ),
@@ -81,9 +87,9 @@ class _Header extends StatelessWidget {
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: cs.primaryContainer.withOpacity(0.55),
+            color: cs.primary.withOpacity(0.10),
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: cs.outlineVariant),
+            border: Border.all(color: AppColors.border),
           ),
           child: Icon(Icons.favorite_rounded, color: cs.primary),
         ),
@@ -98,7 +104,7 @@ class _Header extends StatelessWidget {
             SizedBox(height: 2),
             Text(
               "A calm space for support",
-              style: TextStyle(fontSize: 13, color: AppColors.textMuted),
+              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -108,6 +114,8 @@ class _Header extends StatelessWidget {
 }
 
 class _CalmHeroCard extends StatefulWidget {
+  const _CalmHeroCard();
+
   @override
   State<_CalmHeroCard> createState() => _CalmHeroCardState();
 }
@@ -150,7 +158,7 @@ class _CalmHeroCardState extends State<_CalmHeroCard>
           decoration: BoxDecoration(
             color: cs.surface,
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: cs.outlineVariant),
+            border: Border.all(color: AppColors.border),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.04),
@@ -162,43 +170,47 @@ class _CalmHeroCardState extends State<_CalmHeroCard>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SoftBadge(),
+              const _SoftBadge(),
               const SizedBox(height: 16),
+
               const Text(
                 "Feel heard.\nFeel safe.",
                 style: TextStyle(
                   fontSize: 30,
                   height: 1.15,
                   fontWeight: FontWeight.w900,
+                  color: AppColors.textPrimary,
                 ),
               ),
+
               const SizedBox(height: 10),
               const Text(
                 "Choose the right path for you — therapist or patient — and start with a simple, calm experience.",
                 style: TextStyle(
                   fontSize: 14.5,
                   height: 1.55,
-                  color: AppColors.textMuted,
+                  color: AppColors.textSecondary,
                 ),
               ),
+
               const SizedBox(height: 18),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.lock_outline_rounded,
                         size: 18,
-                        color: AppColors.accent,
+                        color: cs.primary,
                       ),
-                      SizedBox(width: 8),
-                      Text(
+                      const SizedBox(width: 8),
+                      const Text(
                         "Private • Supportive • Simple",
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textMuted,
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -214,6 +226,8 @@ class _CalmHeroCardState extends State<_CalmHeroCard>
 }
 
 class _SoftBadge extends StatelessWidget {
+  const _SoftBadge();
+
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
@@ -221,15 +235,15 @@ class _SoftBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: cs.primaryContainer.withOpacity(0.35),
+        color: cs.primary.withOpacity(0.10),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: cs.outlineVariant),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.spa_rounded, size: 16, color: cs.primary),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
             "Trusted care, calm design",
             style: TextStyle(

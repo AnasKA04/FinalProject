@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/user_role.dart';
 
+import '../../../core/models/user_role.dart';
+import 'anonymous_home_screen.dart';
 import 'patient_home_screen.dart';
 import 'therapist_home_screen.dart';
-import 'anonymous_home_screen.dart';
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -23,7 +21,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content;
+    final Widget content;
 
     if (isAnonymous) {
       content = const AnonymousHomeScreen();
@@ -33,9 +31,13 @@ class HomeScreen extends StatelessWidget {
       content = PatientHomeScreen(displayName: displayName ?? "Patient");
     }
 
-    // ✅ Scaffold provides Material ancestor needed by InkWell / ListTile ripple.
+    // ✅ Avoid nested Scaffolds (patient/therapist screens already have Scaffold)
+    if (asTab) return content;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("PsyCare")),
+      appBar: AppBar(
+        title: const Text("PsyCare"),
+      ),
       body: content,
     );
   }

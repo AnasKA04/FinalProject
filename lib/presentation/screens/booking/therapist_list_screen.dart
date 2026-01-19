@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/booking/booking_store.dart';
 import '../../../core/booking/booking_models.dart';
+import '../../../core/booking/booking_store.dart';
+import '../../../core/theme/app_colors.dart';
 import 'therapist_profile_screen.dart';
 
 class TherapistListScreen extends StatelessWidget {
@@ -36,10 +37,10 @@ class TherapistListScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => TherapistProfileScreen(
-                    therapistId: t.id, // ✅ fixed
+                    therapistId: t.id,
                     patientId: patientId,
                     patientName: patientName,
-                    type: type, // ✅ forward the booking type
+                    type: type,
                   ),
                 ),
               );
@@ -47,17 +48,29 @@ class TherapistListScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.outlineVariant,
-                ),
+                border: Border.all(color: AppColors.border),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.03),
+                    blurRadius: 14,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
                   CircleAvatar(
                     radius: 24,
-                    child: Text(t.name.isNotEmpty ? t.name[0] : "T"),
+                    backgroundColor: AppColors.primaryTeal.withOpacity(0.12),
+                    child: Text(
+                      t.name.isNotEmpty ? t.name[0].toUpperCase() : "T",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.primaryTeal,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -66,21 +79,25 @@ class TherapistListScreen extends StatelessWidget {
                       children: [
                         Text(
                           t.name,
-                          style: const TextStyle(fontWeight: FontWeight.w900),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           "${t.locationText} • ⭐ ${t.rating} (${t.ratingCount})",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            height: 1.3,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.chevron_right_rounded,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    color: AppColors.textSecondary,
                   ),
                 ],
               ),

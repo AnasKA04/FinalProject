@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/booking/booking_models.dart';
+import '../../../core/theme/app_colors.dart';
 import 'booking_slots_screen.dart';
 
 class BookingTypeScreen extends StatelessWidget {
@@ -24,7 +25,6 @@ class BookingTypeScreen extends StatelessWidget {
         child: Column(
           children: [
             _card(
-              context,
               title: "On-site session",
               subtitle: "Visit the therapist in person",
               icon: Icons.location_on_outlined,
@@ -44,7 +44,6 @@ class BookingTypeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _card(
-              context,
               title: "Video call",
               subtitle: "Online session by video",
               icon: Icons.videocam_outlined,
@@ -68,13 +67,12 @@ class BookingTypeScreen extends StatelessWidget {
     );
   }
 
-  Widget _card(
-      BuildContext context, {
-        required String title,
-        required String subtitle,
-        required IconData icon,
-        required VoidCallback onTap,
-      }) {
+  Widget _card({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: onTap,
@@ -82,29 +80,45 @@ class BookingTypeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-          color: Theme.of(context).colorScheme.surface,
+          border: Border.all(color: AppColors.border),
+          color: AppColors.surface,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 14,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
         child: Row(
           children: [
-            Icon(icon),
+            Icon(icon, color: AppColors.primaryTeal),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.w900)),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      height: 1.3,
+                    ),
                   ),
                 ],
               ),
             ),
-            Icon(
+            const Icon(
               Icons.chevron_right_rounded,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              color: AppColors.textSecondary,
             ),
           ],
         ),

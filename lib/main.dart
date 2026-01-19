@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
 
+import 'firebase_options.dart';
+import 'core/theme/app_theme.dart';
 import 'presentation/screens/welcome/welcome_screen.dart';
 
 Future<void> main() async {
@@ -20,6 +21,14 @@ class PsyCareApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PsyCare',
+
+      // ✅ APPLY YOUR THEME (this kills the purple)
+      theme: AppTheme.lightTheme,
+
+      // (optional) if you have a dark theme later:
+      // darkTheme: AppTheme.darkTheme,
+      // themeMode: ThemeMode.system,
+
       home: const WelcomeScreen(),
     );
   }
