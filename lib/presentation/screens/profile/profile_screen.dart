@@ -5,8 +5,8 @@ import '../../../core/theme/app_colors.dart';
 
 import '../settings/settings_screen.dart';
 import '../auth/login_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -28,9 +28,7 @@ class ProfileScreen extends StatelessWidget {
         : (role == UserRole.therapist ? 'Therapist' : 'Patient');
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
+      appBar: AppBar(title: const Text('Profile')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         children: [
@@ -59,9 +57,9 @@ class ProfileScreen extends StatelessWidget {
                 title: 'Privacy',
                 subtitle: 'Control your data and visibility ',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Privacy ')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Privacy ')));
                 },
               ),
             ],
@@ -78,9 +76,9 @@ class ProfileScreen extends StatelessWidget {
                 title: 'Help & FAQ',
                 subtitle: 'Get help using the app ',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Help & FAQ ')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Help & FAQ ')));
                 },
               ),
               const Divider(height: 1, thickness: 1, color: AppColors.border),
@@ -106,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (_) => const LoginScreen()),
-                        (route) => false,
+                    (route) => false,
                   );
                 },
               ),
@@ -122,13 +120,19 @@ class ProfileScreen extends StatelessWidget {
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('About PsyCare', style: TextStyle(fontWeight: FontWeight.w900)),
+        title: const Text(
+          'About PsyCare',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
         content: const Text(
           'Prototype app with assessment flow, therapist review, and chat.\n\nVersion: 1.0',
           style: TextStyle(color: AppColors.textMuted),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
         ],
       ),
     );
@@ -154,9 +158,18 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text('Role: $roleText', style: const TextStyle(color: AppColors.textMuted)),
+                Text(
+                  'Role: $roleText',
+                  style: const TextStyle(color: AppColors.textMuted),
+                ),
               ],
             ),
           ),
@@ -170,7 +183,11 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         t,
-        style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w800, color: AppColors.textMuted),
+        style: const TextStyle(
+          fontSize: 13.5,
+          fontWeight: FontWeight.w800,
+          color: AppColors.textMuted,
+        ),
       ),
     );
   }
@@ -187,12 +204,12 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _navTile(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String subtitle,
-        required VoidCallback onTap,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
     return ListTile(
       onTap: onTap,
       leading: Container(
@@ -204,19 +221,31 @@ class ProfileScreen extends StatelessWidget {
         ),
         child: Icon(icon, color: AppColors.primary),
       ),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.text)),
-      subtitle: Text(subtitle, style: const TextStyle(color: AppColors.textMuted)),
-      trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.w800,
+          color: AppColors.text,
+        ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: const TextStyle(color: AppColors.textMuted),
+      ),
+      trailing: const Icon(
+        Icons.chevron_right_rounded,
+        color: AppColors.textMuted,
+      ),
     );
   }
 
   Widget _dangerTile(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String subtitle,
-        required VoidCallback onTap,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
     const danger = Color(0xFFB42318);
     const dangerBg = Color(0xFFFEE4E2);
 
@@ -231,8 +260,14 @@ class ProfileScreen extends StatelessWidget {
         ),
         child: Icon(icon, color: danger),
       ),
-      title: const Text('Log out', style: TextStyle(fontWeight: FontWeight.w900, color: danger)),
-      subtitle: Text(subtitle, style: const TextStyle(color: AppColors.textMuted)),
+      title: const Text(
+        'Log out',
+        style: TextStyle(fontWeight: FontWeight.w900, color: danger),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: const TextStyle(color: AppColors.textMuted),
+      ),
     );
   }
 }

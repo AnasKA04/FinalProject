@@ -3,9 +3,8 @@ import '../../../core/assessment/assessment_store.dart';
 import '../../../core/theme/app_colors.dart';
 import 'therapist_submission_details_screen.dart';
 
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
-
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class TherapistInboxScreen extends StatelessWidget {
   const TherapistInboxScreen({super.key});
@@ -25,75 +24,79 @@ class TherapistInboxScreen extends StatelessWidget {
       body: SafeArea(
         child: items.isEmpty
             ? Center(
-          child: Text(
-            "No submissions yet.",
-            style: TextStyle(color: AppColors.textMuted),
-          ),
-        )
+                child: Text(
+                  "No submissions yet.",
+                  style: TextStyle(color: AppColors.textMuted),
+                ),
+              )
             : ListView.separated(
-          padding: const EdgeInsets.all(22),
-          itemBuilder: (_, i) {
-            final p = items[i];
-            final flags = [
-              if (p.flaggedSafety) "SAFETY",
-              if (!p.flaggedSafety && p.flaggedForFollowUp) "FOLLOW-UP",
-            ];
+                padding: const EdgeInsets.all(22),
+                itemBuilder: (_, i) {
+                  final p = items[i];
+                  final flags = [
+                    if (p.flaggedSafety) "SAFETY",
+                    if (!p.flaggedSafety && p.flaggedForFollowUp) "FOLLOW-UP",
+                  ];
 
-            return InkWell(
-              borderRadius: BorderRadius.circular(22),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => TherapistSubmissionDetailsScreen(
-                      packet: p,
-                      indexLabel: "#${items.length - i}",
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Submission #${items.length - i}",
-                      style: const TextStyle(fontWeight: FontWeight.w900),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      "Submitted: ${p.submittedAt}",
-                      style: const TextStyle(color: AppColors.textMuted),
-                    ),
-                    const SizedBox(height: 10),
-                    if (flags.isNotEmpty)
-                      Wrap(
-                        spacing: 8,
-                        children: flags
-                            .map((t) => Chip(
-                          label: Text(t),
-                          side: const BorderSide(color: AppColors.border),
-                        ))
-                            .toList(),
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(22),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => TherapistSubmissionDetailsScreen(
+                            packet: p,
+                            indexLabel: "#${items.length - i}",
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(22),
+                        border: Border.all(color: AppColors.border),
                       ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Answers captured: ${p.answers.length}",
-                      style: const TextStyle(color: AppColors.textMuted),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Submission #${items.length - i}",
+                            style: const TextStyle(fontWeight: FontWeight.w900),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            "Submitted: ${p.submittedAt}",
+                            style: const TextStyle(color: AppColors.textMuted),
+                          ),
+                          const SizedBox(height: 10),
+                          if (flags.isNotEmpty)
+                            Wrap(
+                              spacing: 8,
+                              children: flags
+                                  .map(
+                                    (t) => Chip(
+                                      label: Text(t),
+                                      side: const BorderSide(
+                                        color: AppColors.border,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "Answers captured: ${p.answers.length}",
+                            style: const TextStyle(color: AppColors.textMuted),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  );
+                },
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                itemCount: items.length,
               ),
-            );
-          },
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemCount: items.length,
-        ),
       ),
     );
   }

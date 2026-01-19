@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../services/booking_service.dart';
+import '../../../services/booking_service.dart';
 
 class SlotsPage extends StatelessWidget {
   const SlotsPage({super.key, required this.therapistId});
@@ -46,7 +46,9 @@ class SlotsPage extends StatelessWidget {
                 trailing: ElevatedButton(
                   onPressed: () async {
                     try {
-                      final bookingId = await bookingService.bookSlot(slotId: docs[i].id);
+                      final bookingId = await bookingService.bookSlot(
+                        slotId: docs[i].id,
+                      );
 
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -54,9 +56,9 @@ class SlotsPage extends StatelessWidget {
                       );
                     } catch (e) {
                       if (!context.mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Failed: $e')),
-                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('Failed: $e')));
                     }
                   },
                   child: const Text('Book'),

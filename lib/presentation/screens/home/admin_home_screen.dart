@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/assessment/assessment_store.dart';
 import '../../../core/assessment/assessment_models.dart';
 import '../../../core/widgets/app_background.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key, required this.displayName});
@@ -33,9 +33,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     }).toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Admin Dashboard"),
-      ),
+      appBar: AppBar(title: const Text("Admin Dashboard")),
       body: AppBackground(
         child: SafeArea(
           child: ListView(
@@ -46,11 +44,32 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
               Row(
                 children: [
-                  Expanded(child: _statCard(context, title: "Total", value: "$total", icon: Icons.analytics_rounded)),
+                  Expanded(
+                    child: _statCard(
+                      context,
+                      title: "Total",
+                      value: "$total",
+                      icon: Icons.analytics_rounded,
+                    ),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: _statCard(context, title: "Follow-up", value: "$followUpCount", icon: Icons.flag_rounded)),
+                  Expanded(
+                    child: _statCard(
+                      context,
+                      title: "Follow-up",
+                      value: "$followUpCount",
+                      icon: Icons.flag_rounded,
+                    ),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: _statCard(context, title: "Safety", value: "$safetyCount", icon: Icons.warning_rounded)),
+                  Expanded(
+                    child: _statCard(
+                      context,
+                      title: "Safety",
+                      value: "$safetyCount",
+                      icon: Icons.warning_rounded,
+                    ),
+                  ),
                 ],
               ),
 
@@ -66,7 +85,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               if (filtered.isEmpty)
                 _emptyCard(context)
               else
-                ...filtered.take(20).map((p) => _submissionTile(context, p)).toList(),
+                ...filtered
+                    .take(20)
+                    .map((p) => _submissionTile(context, p))
+                    .toList(),
             ],
           ),
         ),
@@ -100,7 +122,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Hi, $name 👋", style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16.5)),
+                Text(
+                  "Hi, $name 👋",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16.5,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   "Manage submissions and triage flags (demo).",
@@ -114,7 +142,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     );
   }
 
-  Widget _statCard(BuildContext context, {required String title, required String value, required IconData icon}) {
+  Widget _statCard(
+    BuildContext context, {
+    required String title,
+    required String value,
+    required IconData icon,
+  }) {
     final cs = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(12),
@@ -140,9 +173,18 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12.5)),
+                Text(
+                  title,
+                  style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12.5),
+                ),
                 const SizedBox(height: 2),
-                Text(value, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18)),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                  ),
+                ),
               ],
             ),
           ),
@@ -171,16 +213,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     return Wrap(
       spacing: 10,
       runSpacing: 10,
-      children: [
-        chip("All", 0),
-        chip("Follow-up", 1),
-        chip("Safety", 2),
-      ],
+      children: [chip("All", 0), chip("Follow-up", 1), chip("Safety", 2)],
     );
   }
 
   Widget _sectionTitle(String t) {
-    return Text(t, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 14.5));
+    return Text(
+      t,
+      style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 14.5),
+    );
   }
 
   Widget _emptyCard(BuildContext context) {
@@ -234,12 +275,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               title: const Text("Submission details"),
               content: Text(
                 "Submitted: ${p.submittedAt}\n"
-                    "Answers: ${p.answers.length}\n"
-                    "Flagged Follow-up: ${p.flaggedForFollowUp}\n"
-                    "Flagged Safety: ${p.flaggedSafety}",
+                "Answers: ${p.answers.length}\n"
+                "Flagged Follow-up: ${p.flaggedForFollowUp}\n"
+                "Flagged Safety: ${p.flaggedSafety}",
               ),
               actions: [
-                TextButton(onPressed: () => Navigator.pop(context), child: const Text("Close")),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Close"),
+                ),
               ],
             ),
           );

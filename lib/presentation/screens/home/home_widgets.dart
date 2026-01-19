@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class GreetingCard extends StatelessWidget {
   const GreetingCard({super.key, required this.name, required this.subtitle});
@@ -23,7 +23,7 @@ class GreetingCard extends StatelessWidget {
             color: Colors.black.withOpacity(0.04),
             blurRadius: 18,
             offset: const Offset(0, 10),
-          )
+          ),
         ],
       ),
       child: Row(
@@ -45,7 +45,10 @@ class GreetingCard extends StatelessWidget {
               children: [
                 Text(
                   "Hi, $name 👋",
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -106,9 +109,18 @@ class ActionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontSize: 15.5, fontWeight: FontWeight.w800)),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15.5,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
                   const SizedBox(height: 6),
-                  Text(subtitle, style: TextStyle(color: cs.onSurfaceVariant, height: 1.3)),
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: cs.onSurfaceVariant, height: 1.3),
+                  ),
                 ],
               ),
             ),
@@ -151,9 +163,15 @@ class InfoTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.w800),
+                ),
                 const SizedBox(height: 6),
-                Text(subtitle, style: TextStyle(color: cs.onSurfaceVariant, height: 1.3)),
+                Text(
+                  subtitle,
+                  style: TextStyle(color: cs.onSurfaceVariant, height: 1.3),
+                ),
               ],
             ),
           ),

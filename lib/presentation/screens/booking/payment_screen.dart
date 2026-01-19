@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../core/booking/booking_store.dart';
 import '../../../core/booking/booking_models.dart';
 import 'booking_success_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({
@@ -51,9 +51,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void _payNow() {
     if (_method == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Choose a payment method.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Choose a payment method.")));
       return;
     }
 
@@ -78,7 +78,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final typeText = widget.type == SessionType.onsite ? "On-site" : "Video call";
+    final typeText = widget.type == SessionType.onsite
+        ? "On-site"
+        : "Video call";
 
     return Scaffold(
       appBar: AppBar(title: const Text("Payment")),
@@ -90,7 +92,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outlineVariant,
+                ),
                 color: Theme.of(context).colorScheme.surface,
               ),
               child: Row(
@@ -98,7 +102,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   const Icon(Icons.receipt_long_rounded),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: Text("Session: $typeText\nTime: ${widget.slot.start}"),
+                    child: Text(
+                      "Session: $typeText\nTime: ${widget.slot.start}",
+                    ),
                   ),
                 ],
               ),

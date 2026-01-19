@@ -5,7 +5,7 @@ import '../../../core/navigation/app_transitions.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/widgets/app_button.dart';
 
-import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
 import 'package:psycare/presentation/screens/main/main_nav_screen.dart';
 import '../../../models/enums.dart' as db;
 
@@ -31,10 +31,8 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
     super.dispose();
   }
 
-  InputDecoration _dec(String label, IconData icon) => InputDecoration(
-    labelText: label,
-    prefixIcon: Icon(icon),
-  );
+  InputDecoration _dec(String label, IconData icon) =>
+      InputDecoration(labelText: label, prefixIcon: Icon(icon));
 
   Future<void> _createAccount() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
@@ -42,8 +40,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
     final auth = AuthService();
 
     // Convert UI role -> DB role
-    final db.UserRole dbRole =
-    widget.role == ui.UserRole.therapist
+    final db.UserRole dbRole = widget.role == ui.UserRole.therapist
         ? db.UserRole.therapist
         : db.UserRole.patient;
 
@@ -65,13 +62,13 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
             displayName: _name.text.trim(),
           ),
         ),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign up failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Sign up failed: $e')));
     }
   }
 
@@ -100,14 +97,14 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     controller: _name,
                     decoration: _dec("Full Name", Icons.person_outline_rounded),
                     validator: (v) =>
-                    (v ?? "").length < 2 ? "Name too short" : null,
+                        (v ?? "").length < 2 ? "Name too short" : null,
                   ),
                   const SizedBox(height: 14),
                   TextFormField(
                     controller: _email,
                     decoration: _dec("Email", Icons.email_outlined),
                     validator: (v) =>
-                    (v ?? "").contains("@") ? null : "Invalid email",
+                        (v ?? "").contains("@") ? null : "Invalid email",
                   ),
                   const SizedBox(height: 14),
                   TextFormField(
@@ -115,7 +112,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     obscureText: true,
                     decoration: _dec("Password", Icons.lock_outline_rounded),
                     validator: (v) =>
-                    (v ?? "").length < 6 ? "Password too short" : null,
+                        (v ?? "").length < 6 ? "Password too short" : null,
                   ),
                   const SizedBox(height: 18),
                   AppButton(

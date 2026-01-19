@@ -6,7 +6,7 @@ import '../../../core/widgets/app_background.dart';
 import '../../../core/models/user_role.dart' as ui;
 
 import '../main/main_nav_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
 import '../../../models/enums.dart' as db;
 
 class LoginFormScreen extends StatefulWidget {
@@ -29,10 +29,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     super.dispose();
   }
 
-  InputDecoration _dec(String label, IconData icon) => InputDecoration(
-    labelText: label,
-    prefixIcon: Icon(icon),
-  );
+  InputDecoration _dec(String label, IconData icon) =>
+      InputDecoration(labelText: label, prefixIcon: Icon(icon));
 
   Future<void> _login() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
@@ -66,13 +64,13 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
             displayName: null, // fetched later in profile
           ),
         ),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Login failed: $e')));
     }
   }
 
@@ -101,10 +99,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   Text(
                     "Welcome back",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(

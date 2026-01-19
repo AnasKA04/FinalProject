@@ -3,8 +3,8 @@ import '../../../core/widgets/app_background.dart';
 import '../therapist/therapist_inbox_screen.dart';
 import 'home_widgets.dart';
 import '../booking/therapist_requests_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class TherapistHomeScreen extends StatelessWidget {
   const TherapistHomeScreen({super.key, required this.displayName});
@@ -23,7 +23,10 @@ class TherapistHomeScreen extends StatelessWidget {
               subtitle: "Role: Therapist • You’re safe here.",
             ),
             const SizedBox(height: 16),
-            const Text("Quick actions", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            const Text(
+              "Quick actions",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
 
             ActionCard(
@@ -32,7 +35,9 @@ class TherapistHomeScreen extends StatelessWidget {
               icon: Icons.inbox_rounded,
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const TherapistInboxScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => const TherapistInboxScreen(),
+                  ),
                 );
               },
             ),
@@ -43,9 +48,9 @@ class TherapistHomeScreen extends StatelessWidget {
               subtitle: "Quick daily reflection ",
               icon: Icons.mood_rounded,
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Mood Check-in ")),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text("Mood Check-in ")));
               },
             ),
             const SizedBox(height: 12),
@@ -55,9 +60,9 @@ class TherapistHomeScreen extends StatelessWidget {
               subtitle: "60 seconds calm breathing ",
               icon: Icons.spa_rounded,
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Breathing ")),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text("Breathing ")));
               },
             ),
             const SizedBox(height: 22),
@@ -78,7 +83,10 @@ class TherapistHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            const Text("Recent activity", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            const Text(
+              "Recent activity",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
 
             const InfoTile(
@@ -89,7 +97,8 @@ class TherapistHomeScreen extends StatelessWidget {
             const SizedBox(height: 10),
             const InfoTile(
               title: "Tip for today",
-              subtitle: "Keep sessions brief and supportive. Use gentle questions.",
+              subtitle:
+                  "Keep sessions brief and supportive. Use gentle questions.",
               icon: Icons.lightbulb_outline_rounded,
             ),
           ],

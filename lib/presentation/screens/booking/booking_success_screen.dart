@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class BookingSuccessScreen extends StatelessWidget {
   const BookingSuccessScreen({super.key, required this.bookingId});

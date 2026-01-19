@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -31,10 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         title: const Text(
           'Settings',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: AppColors.text,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.text),
         ),
         iconTheme: const IconThemeData(color: AppColors.text),
       ),
@@ -197,13 +194,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
-      child: Column(
-        children: children,
-      ),
+      child: Column(children: children),
     );
   }
 
-  Widget _divider() => const Divider(height: 1, thickness: 1, color: AppColors.border);
+  Widget _divider() =>
+      const Divider(height: 1, thickness: 1, color: AppColors.border);
 
   Widget _switchTile({
     required IconData icon,
@@ -262,16 +258,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       title: Text(
         title,
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          color: titleColor,
-        ),
+        style: TextStyle(fontWeight: FontWeight.w800, color: titleColor),
       ),
       subtitle: Text(
         subtitle,
         style: const TextStyle(color: AppColors.textMuted),
       ),
-      trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+      trailing: const Icon(
+        Icons.chevron_right_rounded,
+        color: AppColors.textMuted,
+      ),
     );
   }
 
@@ -303,7 +299,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       builder: (_) => _bottomSheetPicker(
         title: 'Privacy mode',
-        items: const ['Standard', 'Private (hide previews)', 'Strict (lock sensitive screens)'],
+        items: const [
+          'Standard',
+          'Private (hide previews)',
+          'Strict (lock sensitive screens)',
+        ],
         selected: _privacyMode,
       ),
     );
@@ -356,7 +356,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 trailing: isSelected
                     ? const Icon(Icons.check_circle, color: AppColors.primary)
-                    : const Icon(Icons.circle_outlined, color: AppColors.textMuted),
+                    : const Icon(
+                        Icons.circle_outlined,
+                        color: AppColors.textMuted,
+                      ),
               );
             }),
           ],
@@ -384,7 +387,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: const Text('Cancel'),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: const Color(0xFFB42318)),
+            style: FilledButton.styleFrom(
+              backgroundColor: const Color(0xFFB42318),
+            ),
             onPressed: () {
               setState(() {
                 _darkMode = false;
@@ -416,7 +421,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         content: const Text(
           'PsyCare is a mental wellness app prototype.\n\n'
-              'Includes assessment flow, therapist review, and chat.',
+          'Includes assessment flow, therapist review, and chat.',
           style: TextStyle(color: AppColors.textMuted),
         ),
         actions: [
@@ -430,8 +435,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _snack(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg)),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 }

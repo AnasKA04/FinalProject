@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/booking/booking_models.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 import 'booking_success_screen.dart';
 
 class BookingSlotsFirestoreScreen extends StatelessWidget {
@@ -67,13 +67,16 @@ class BookingSlotsFirestoreScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 onTap: () async {
                   try {
-                    final bookingId = await BookingService().bookSlot(slotId: doc.id);
+                    final bookingId = await BookingService().bookSlot(
+                      slotId: doc.id,
+                    );
 
                     if (!context.mounted) return;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => BookingSuccessScreen(bookingId: bookingId),
+                        builder: (_) =>
+                            BookingSuccessScreen(bookingId: bookingId),
                       ),
                     );
                   } catch (e) {

@@ -4,9 +4,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/assessment/assessment_bank.dart';
 
-
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class TherapistSubmissionDetailsScreen extends StatelessWidget {
   const TherapistSubmissionDetailsScreen({
@@ -45,8 +44,12 @@ class TherapistSubmissionDetailsScreen extends StatelessWidget {
 
             ...packet.answers.map((a) {
               final q = qMap[a.questionId];
-              final choice = q?.choices.where((c) => c.id == a.choiceId).toList();
-              final choiceText = (choice != null && choice.isNotEmpty) ? choice.first.text : a.choiceId;
+              final choice = q?.choices
+                  .where((c) => c.id == a.choiceId)
+                  .toList();
+              final choiceText = (choice != null && choice.isNotEmpty)
+                  ? choice.first.text
+                  : a.choiceId;
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -114,10 +117,10 @@ class _HeaderCard extends StatelessWidget {
             children: flags
                 .map(
                   (t) => Chip(
-                label: Text(t),
-                side: const BorderSide(color: AppColors.border),
-              ),
-            )
+                    label: Text(t),
+                    side: const BorderSide(color: AppColors.border),
+                  ),
+                )
                 .toList(),
           ),
           const SizedBox(height: 10),

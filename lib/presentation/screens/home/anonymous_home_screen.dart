@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/assessment/assessment_flow_screen.dart';
 import 'home_widgets.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class AnonymousHomeScreen extends StatelessWidget {
   const AnonymousHomeScreen({super.key});
@@ -20,7 +20,10 @@ class AnonymousHomeScreen extends StatelessWidget {
               subtitle: "You’re browsing anonymously — calm and private.",
             ),
             const SizedBox(height: 16),
-            const Text("Quick actions", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            const Text(
+              "Quick actions",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
 
             ActionCard(
@@ -29,7 +32,9 @@ class AnonymousHomeScreen extends StatelessWidget {
               icon: Icons.assignment_rounded,
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const AssessmentFlowScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => const AssessmentFlowScreen(),
+                  ),
                 );
               },
             ),
@@ -40,9 +45,9 @@ class AnonymousHomeScreen extends StatelessWidget {
               subtitle: "Quick daily reflection ",
               icon: Icons.mood_rounded,
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Mood Check-in")),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text("Mood Check-in")));
               },
             ),
             const SizedBox(height: 12),
@@ -52,14 +57,17 @@ class AnonymousHomeScreen extends StatelessWidget {
               subtitle: "60 seconds calm breathing",
               icon: Icons.spa_rounded,
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Breathing ")),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text("Breathing ")));
               },
             ),
 
             const SizedBox(height: 22),
-            const Text("Recent activity", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            const Text(
+              "Recent activity",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
 
             const InfoTile(

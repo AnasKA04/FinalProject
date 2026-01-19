@@ -6,8 +6,6 @@ import '../../../core/navigation/app_transitions.dart';
 import '../auth/login_screen.dart';
 import '../main/main_nav_screen.dart';
 import '../../../core/models/user_role.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -20,47 +18,48 @@ class WelcomeScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
             child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 8),
-              _Header(),
-              const SizedBox(height: 26),
-              Expanded(
-                child: _CalmHeroCard(),
-              ),
-              const SizedBox(height: 18),
-              AppButton(
-                label: "Continue as Anonymous",
-                isSecondary: true,
-                icon: Icons.visibility_off_rounded,
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    AppTransitions.fadeSlide(
-                      const MainNavScreen(isAnonymous: true, role: UserRole.patient),
-                    ),
-                  );
-                },
-              ),
-              AppButton(
-                label: "Get Started",
-                icon: Icons.arrow_forward_rounded,
-                onPressed: () {
-                  Navigator.of(context).push(
-                    AppTransitions.fadeSlide(const LoginScreen()),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "By continuing, you agree to a calm and safe experience.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 12.5,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 8),
+                _Header(),
+                const SizedBox(height: 26),
+                Expanded(child: _CalmHeroCard()),
+                const SizedBox(height: 18),
+                AppButton(
+                  label: "Continue as Anonymous",
+                  isSecondary: true,
+                  icon: Icons.visibility_off_rounded,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      AppTransitions.fadeSlide(
+                        const MainNavScreen(
+                          isAnonymous: true,
+                          role: UserRole.patient,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-              const SizedBox(height: 6),
-            ],
+                AppButton(
+                  label: "Get Started",
+                  icon: Icons.arrow_forward_rounded,
+                  onPressed: () {
+                    Navigator.of(
+                      context,
+                    ).push(AppTransitions.fadeSlide(const LoginScreen()));
+                  },
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "By continuing, you agree to a calm and safe experience.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 29, 70, 128),
+                    fontSize: 12.5,
+                  ),
+                ),
+                const SizedBox(height: 6),
+              ],
             ),
           ),
         ),
@@ -113,7 +112,8 @@ class _CalmHeroCard extends StatefulWidget {
   State<_CalmHeroCard> createState() => _CalmHeroCardState();
 }
 
-class _CalmHeroCardState extends State<_CalmHeroCard> with SingleTickerProviderStateMixin {
+class _CalmHeroCardState extends State<_CalmHeroCard>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _c;
   late final Animation<double> _fade;
   late final Animation<double> _scale;
@@ -121,7 +121,10 @@ class _CalmHeroCardState extends State<_CalmHeroCard> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 520));
+    _c = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 520),
+    );
     final curved = CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
     _fade = Tween<double>(begin: 0, end: 1).animate(curved);
     _scale = Tween<double>(begin: 0.98, end: 1).animate(curved);
@@ -153,7 +156,7 @@ class _CalmHeroCardState extends State<_CalmHeroCard> with SingleTickerProviderS
                 color: Colors.black.withOpacity(0.04),
                 blurRadius: 18,
                 offset: const Offset(0, 10),
-              )
+              ),
             ],
           ),
           child: Column(
@@ -184,7 +187,11 @@ class _CalmHeroCardState extends State<_CalmHeroCard> with SingleTickerProviderS
                   alignment: Alignment.bottomLeft,
                   child: Row(
                     children: const [
-                      Icon(Icons.lock_outline_rounded, size: 18, color: AppColors.accent),
+                      Icon(
+                        Icons.lock_outline_rounded,
+                        size: 18,
+                        color: AppColors.accent,
+                      ),
                       SizedBox(width: 8),
                       Text(
                         "Private • Supportive • Simple",
@@ -225,7 +232,11 @@ class _SoftBadge extends StatelessWidget {
           SizedBox(width: 8),
           Text(
             "Trusted care, calm design",
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: cs.primary),
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: cs.primary,
+            ),
           ),
         ],
       ),

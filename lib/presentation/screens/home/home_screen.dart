@@ -4,8 +4,8 @@ import '../../../core/models/user_role.dart';
 import 'patient_home_screen.dart';
 import 'therapist_home_screen.dart';
 import 'anonymous_home_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import 'package:psycare/services/auth_serviece.dart';
+import 'package:psycare/services/booking_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -35,9 +35,7 @@ class HomeScreen extends StatelessWidget {
 
     // ✅ Scaffold provides Material ancestor needed by InkWell / ListTile ripple.
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("PsyCare"),
-      ),
+      appBar: AppBar(title: const Text("PsyCare")),
       body: content,
     );
   }
