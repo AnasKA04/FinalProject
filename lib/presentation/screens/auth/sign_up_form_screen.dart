@@ -6,7 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/widgets/app_button.dart';
 
-import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/service/auth_service.dart';
 import 'package:psycare/presentation/screens/main/main_nav_screen.dart';
 import '../../../models/enums.dart' as db;
 
@@ -34,10 +34,8 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
     super.dispose();
   }
 
-  InputDecoration _dec(String label, IconData icon) => InputDecoration(
-    labelText: label,
-    prefixIcon: Icon(icon),
-  );
+  InputDecoration _dec(String label, IconData icon) =>
+      InputDecoration(labelText: label, prefixIcon: Icon(icon));
 
   Future<void> _createAccount() async {
     if (_loading) return;
@@ -69,7 +67,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
             displayName: _name.text.trim(),
           ),
         ),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       if (!mounted) return;
@@ -110,10 +108,9 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                     Text(
                       "Create your account",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w900),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -131,8 +128,10 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                       controller: _name,
                       textInputAction: TextInputAction.next,
                       autofillHints: const [AutofillHints.name],
-                      decoration:
-                      _dec("Full Name", Icons.person_outline_rounded),
+                      decoration: _dec(
+                        "Full Name",
+                        Icons.person_outline_rounded,
+                      ),
                       validator: (v) {
                         final value = (v ?? "").trim();
                         if (value.length < 2) return "Name too short.";
@@ -162,8 +161,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
                       textInputAction: TextInputAction.done,
                       autofillHints: const [AutofillHints.newPassword],
                       onFieldSubmitted: (_) => _createAccount(),
-                      decoration:
-                      _dec("Password", Icons.lock_outline_rounded),
+                      decoration: _dec("Password", Icons.lock_outline_rounded),
                       validator: (v) {
                         if ((v ?? "").length < 6) return "Password too short.";
                         return null;

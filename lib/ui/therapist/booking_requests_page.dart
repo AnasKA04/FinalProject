@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/booking_service.dart';
+import '../../service/booking_service.dart';
 
 class BookingRequestsPage extends StatefulWidget {
   const BookingRequestsPage({super.key});
@@ -40,14 +40,14 @@ class _BookingRequestsPageState extends State<BookingRequestsPage> {
     try {
       await _bookingService.therapistAcceptBooking(bookingId: bookingId);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Accepted ✅')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Accepted ✅')));
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Accept failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Accept failed: $e')));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -58,14 +58,14 @@ class _BookingRequestsPageState extends State<BookingRequestsPage> {
     try {
       await _bookingService.therapistRejectBooking(bookingId: bookingId);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Rejected ✅')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Rejected ✅')));
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Reject failed: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Reject failed: $e')));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -85,21 +85,20 @@ class _BookingRequestsPageState extends State<BookingRequestsPage> {
   Widget build(BuildContext context) {
     final me = _me;
     if (me == null) {
-      return const Scaffold(
-        body: Center(child: Text('Not logged in')),
-      );
+      return const Scaffold(body: Center(child: Text('Not logged in')));
     }
 
     final q = FirebaseFirestore.instance
         .collection('bookings')
         .where('therapistId', isEqualTo: me.uid)
-        .where('status', isEqualTo: 'pending') // matches your BookingStatus.pending
+        .where(
+          'status',
+          isEqualTo: 'pending',
+        ) // matches your BookingStatus.pending
         .orderBy('createdAt', descending: true);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Booking Requests'),
-      ),
+      appBar: AppBar(title: const Text('Booking Requests')),
       body: Column(
         children: [
           if (!_cleanedUp)

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/booking/booking_models.dart';
-import 'package:psycare/services/booking_service.dart';
+import 'package:psycare/service/booking_service.dart';
 import 'booking_success_screen.dart';
 
 class BookingSlotsFirestoreScreen extends StatelessWidget {

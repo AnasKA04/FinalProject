@@ -7,7 +7,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/models/user_role.dart' as ui;
 
 import '../main/main_nav_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
+import 'package:psycare/service/auth_service.dart';
 import '../../../models/enums.dart' as db;
 
 class LoginFormScreen extends StatefulWidget {
@@ -32,10 +32,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     super.dispose();
   }
 
-  InputDecoration _dec(String label, IconData icon) => InputDecoration(
-    labelText: label,
-    prefixIcon: Icon(icon),
-  );
+  InputDecoration _dec(String label, IconData icon) =>
+      InputDecoration(labelText: label, prefixIcon: Icon(icon));
 
   Future<void> _login() async {
     if (_loading) return;
@@ -71,7 +69,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
             displayName: null, // fetched later in profile
           ),
         ),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       if (!mounted) return;
@@ -112,10 +110,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     Text(
                       "Welcome back",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w800),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const SizedBox(height: 2),

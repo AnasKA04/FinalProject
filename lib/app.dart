@@ -19,8 +19,8 @@ class PsyCareApp extends StatelessWidget {
             return MaterialApp(
               title: 'PsyCare',
               debugShowCheckedModeBanner: false,
-              theme: AppTheme.light(seedColor: seed),
-              darkTheme: AppTheme.dark(seedColor: seed),
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.lightTheme,
               themeMode: mode,
               home: const WelcomeScreen(),
             );

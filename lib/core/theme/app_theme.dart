@@ -8,16 +8,17 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.scaffoldBackground,
 
     // ✅ Strong ColorScheme (prevents purple defaults)
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.primaryTeal,
-      brightness: Brightness.light,
-    ).copyWith(
-      primary: AppColors.primaryTeal,
-      secondary: AppColors.tertiarySea,
-      tertiary: AppColors.secondaryIndigo,
-      surface: AppColors.surface,
-      error: AppColors.error,
-    ),
+    colorScheme:
+        ColorScheme.fromSeed(
+          seedColor: AppColors.primaryTeal,
+          brightness: Brightness.light,
+        ).copyWith(
+          primary: AppColors.primaryTeal,
+          secondary: AppColors.tertiarySea,
+          tertiary: AppColors.secondaryIndigo,
+          surface: AppColors.surface,
+          error: AppColors.error,
+        ),
 
     // ✅ Makes icons follow teal instead of purple/black in random places
     iconTheme: const IconThemeData(color: AppColors.primaryTeal),
@@ -37,13 +38,11 @@ class AppTheme {
       foregroundColor: Colors.white,
     ),
 
-    // ✅ Progress indicators unified
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: AppColors.primaryTeal,
     ),
 
-    // ✅ Cards unified
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: AppColors.surface,
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -59,9 +58,7 @@ class AppTheme {
         foregroundColor: Colors.white,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
 
@@ -71,17 +68,13 @@ class AppTheme {
         foregroundColor: AppColors.primaryTeal,
         side: const BorderSide(color: AppColors.primaryTeal),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
 
     // ✅ TextButton unified
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: AppColors.primaryTeal,
-      ),
+      style: TextButton.styleFrom(foregroundColor: AppColors.primaryTeal),
     ),
 
     // ✅ TextField unified (this is where purple often appears)
@@ -123,10 +116,7 @@ class AppTheme {
     ),
 
     // ✅ Divider
-    dividerTheme: const DividerThemeData(
-      color: AppColors.border,
-      thickness: 1,
-    ),
+    dividerTheme: const DividerThemeData(color: AppColors.border, thickness: 1),
 
     // ✅ Typography unified
     textTheme: const TextTheme(
@@ -140,14 +130,8 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         color: AppColors.textPrimary,
       ),
-      bodyMedium: TextStyle(
-        fontSize: 16,
-        color: AppColors.textSecondary,
-      ),
-      bodySmall: TextStyle(
-        fontSize: 13,
-        color: AppColors.textSecondary,
-      ),
+      bodyMedium: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+      bodySmall: TextStyle(fontSize: 13, color: AppColors.textSecondary),
     ),
   );
 }

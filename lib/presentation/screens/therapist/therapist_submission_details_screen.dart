@@ -4,8 +4,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/assessment/assessment_bank.dart';
 
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
+import 'package:psycare/service/auth_service.dart';
+import 'package:psycare/service/booking_service.dart';
 
 class TherapistSubmissionDetailsScreen extends StatelessWidget {
   const TherapistSubmissionDetailsScreen({
@@ -108,7 +108,7 @@ class _HeaderCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             "Submitted: ${packet.submittedAt}",
-            style: const TextStyle(color: AppColors.textMuted),
+            style: const TextStyle(color: AppColors.textSecondary),
           ),
           const SizedBox(height: 10),
           Wrap(
@@ -126,7 +126,7 @@ class _HeaderCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             "Answers captured: ${packet.answers.length}",
-            style: const TextStyle(color: AppColors.textMuted),
+            style: const TextStyle(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -165,14 +165,19 @@ class _AnswerCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               questionSubtitle,
-              style: const TextStyle(color: AppColors.textMuted, height: 1.35),
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                height: 1.35,
+              ),
             ),
           ],
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
-              color: AppColors.primarySoft.withOpacity(0.35),
+              color: Theme.of(
+                context,
+              ).colorScheme.primaryContainer.withOpacity(0.35),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: AppColors.border),
             ),

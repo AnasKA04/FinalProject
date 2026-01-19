@@ -17,7 +17,7 @@ class AssessmentScreen extends StatelessWidget {
       body: Center(
         child: Text(
           "Next: Build the 10-question assessment UI",
-          style: TextStyle(color: AppColors.textMuted),
+          style: TextStyle(color: AppColors.textSecondary),
         ),
       ),
     );

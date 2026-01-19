@@ -3,8 +3,8 @@ import '../../../core/assessment/assessment_store.dart';
 import '../../../core/theme/app_colors.dart';
 import 'therapist_submission_details_screen.dart';
 
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
+import 'package:psycare/service/auth_service.dart';
+import 'package:psycare/service/booking_service.dart';
 
 class TherapistInboxScreen extends StatelessWidget {
   const TherapistInboxScreen({super.key});
@@ -26,7 +26,7 @@ class TherapistInboxScreen extends StatelessWidget {
             ? Center(
                 child: Text(
                   "No submissions yet.",
-                  style: TextStyle(color: AppColors.textMuted),
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
               )
             : ListView.separated(
@@ -67,7 +67,9 @@ class TherapistInboxScreen extends StatelessWidget {
                           const SizedBox(height: 6),
                           Text(
                             "Submitted: ${p.submittedAt}",
-                            style: const TextStyle(color: AppColors.textMuted),
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           if (flags.isNotEmpty)
@@ -87,7 +89,9 @@ class TherapistInboxScreen extends StatelessWidget {
                           const SizedBox(height: 8),
                           Text(
                             "Answers captured: ${p.answers.length}",
-                            style: const TextStyle(color: AppColors.textMuted),
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                            ),
                           ),
                         ],
                       ),

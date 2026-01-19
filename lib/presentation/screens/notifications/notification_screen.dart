@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/notifications/notification_store.dart';
-import 'package:psycare/services/auth_serviece.dart';
-import 'package:psycare/services/booking_service.dart';
+import 'package:psycare/service/auth_service.dart';
+import 'package:psycare/service/booking_service.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({

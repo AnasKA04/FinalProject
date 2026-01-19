@@ -10,10 +10,14 @@ class AppSettingsStore {
   static final AppSettingsStore instance = AppSettingsStore._();
 
   /// Controls light/dark/system mode.
-  final ValueNotifier<ThemeMode> themeMode = ValueNotifier<ThemeMode>(ThemeMode.light);
+  final ValueNotifier<ThemeMode> themeMode = ValueNotifier<ThemeMode>(
+    ThemeMode.light,
+  );
 
   /// Seed color used to build the Material 3 color scheme.
-  final ValueNotifier<Color> seedColor = ValueNotifier<Color>(AppColors.seed);
+  final ValueNotifier<Color> seedColor = ValueNotifier<Color>(
+    AppColors.primaryTeal,
+  );
 
   void setThemeMode(ThemeMode mode) => themeMode.value = mode;
   void setSeedColor(Color color) => seedColor.value = color;
