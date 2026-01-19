@@ -3,8 +3,7 @@ import '../../../core/widgets/app_background.dart';
 import '../../../core/assessment/assessment_flow_screen.dart';
 import 'home_widgets.dart';
 import '../booking/therapist_list_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
+import '../../../core/booking/booking_models.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   const PatientHomeScreen({super.key, required this.displayName});
@@ -23,7 +22,10 @@ class PatientHomeScreen extends StatelessWidget {
               subtitle: "Role: Patient • You’re safe here.",
             ),
             const SizedBox(height: 16),
-            const Text("Quick actions", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            const Text(
+              "Quick actions",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
 
             ActionCard(
@@ -70,8 +72,9 @@ class PatientHomeScreen extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => TherapistListScreen(
-                      patientId: "patient_1", // ✅ replace later with real id
+                      patientId: "patient_1", // ✅ replace later with Firebase uid
                       patientName: displayName,
+                      type: SessionType.video, // ✅ required param (choose default)
                     ),
                   ),
                 );
@@ -79,7 +82,10 @@ class PatientHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            const Text("Recent activity", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            const Text(
+              "Recent activity",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
 
             const InfoTile(

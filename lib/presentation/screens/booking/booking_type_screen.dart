@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/booking/booking_models.dart';
 import 'booking_slots_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
 
 class BookingTypeScreen extends StatelessWidget {
   const BookingTypeScreen({
@@ -96,13 +95,17 @@ class BookingTypeScreen extends StatelessWidget {
                 children: [
                   Text(title, style: const TextStyle(fontWeight: FontWeight.w900)),
                   const SizedBox(height: 4),
-                  Text(subtitle,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded,
-                color: Theme.of(context).colorScheme.onSurfaceVariant),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ],
         ),
       ),

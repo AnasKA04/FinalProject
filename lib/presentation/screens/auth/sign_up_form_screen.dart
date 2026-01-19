@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/models/user_role.dart';
+import '../../../core/models/user_role.dart' as ui;
 import '../../../core/navigation/app_transitions.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../../core/auth/auth_store.dart';
 
-import '../main/main_nav_screen.dart';
 import 'package:psycare/serviece/auth_serviece.dart';
-import '../../main/main_nav_screen.dart'; // adjust path
+import 'package:psycare/presentation/screens/main/main_nav_screen.dart';
+import '../../../models/enums.dart' as db;
 
 class SignUpFormScreen extends StatefulWidget {
   const SignUpFormScreen({super.key, required this.role});
-  final UserRole role;
+  final ui.UserRole role;
 
   @override
   State<SignUpFormScreen> createState() => _SignUpFormScreenState();
@@ -38,22 +37,23 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
   );
 
   Future<void> _createAccount() async {
-    FocusScope.of(context).unfocus();
-
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     final auth = AuthService();
+
+    // Convert UI role -> DB role
+    final db.UserRole dbRole =
+    widget.role == ui.UserRole.therapist
+        ? db.UserRole.therapist
+        : db.UserRole.patient;
 
     try {
       await auth.signUpEmailPassword(
         email: _email.text.trim(),
         password: _password.text,
         fullName: _name.text.trim(),
-        role: widget.role, // UserRole.patient or UserRole.therapist
+        role: dbRole,
       );
-
-      // Optional: fetch name again from Firestore if you want
-      final fullName = await auth.getCurrentUserFullName();
 
       if (!mounted) return;
 
@@ -62,7 +62,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
           MainNavScreen(
             isAnonymous: false,
             role: widget.role,
-            displayName: fullName ?? _name.text.trim(),
+            displayName: _name.text.trim(),
           ),
         ),
             (route) => false,
@@ -96,64 +96,27 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 6),
-                  Text(
-                    "Create your $roleLabel account",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Your data stays on this device for now (demo mode).",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 26),
-
                   TextFormField(
                     controller: _name,
                     decoration: _dec("Full Name", Icons.person_outline_rounded),
-                    validator: (v) {
-                      final value = (v ?? "").trim();
-                      if (value.isEmpty) return "Name is required.";
-                      if (value.length < 2) return "Name is too short.";
-                      return null;
-                    },
+                    validator: (v) =>
+                    (v ?? "").length < 2 ? "Name too short" : null,
                   ),
                   const SizedBox(height: 14),
-
                   TextFormField(
                     controller: _email,
-                    keyboardType: TextInputType.emailAddress,
                     decoration: _dec("Email", Icons.email_outlined),
-                    validator: (v) {
-                      final value = (v ?? "").trim();
-                      if (value.isEmpty) return "Email is required.";
-                      if (!value.contains("@") || !value.contains(".")) {
-                        return "Enter a valid email.";
-                      }
-                      return null;
-                    },
+                    validator: (v) =>
+                    (v ?? "").contains("@") ? null : "Invalid email",
                   ),
                   const SizedBox(height: 14),
-
                   TextFormField(
                     controller: _password,
                     obscureText: true,
                     decoration: _dec("Password", Icons.lock_outline_rounded),
-                    validator: (v) {
-                      final value = (v ?? "");
-                      if (value.isEmpty) return "Password is required.";
-                      if (value.length < 6) return "Password must be at least 6 characters.";
-                      return null;
-                    },
+                    validator: (v) =>
+                    (v ?? "").length < 6 ? "Password too short" : null,
                   ),
-
                   const SizedBox(height: 18),
                   AppButton(
                     label: "Create Account",

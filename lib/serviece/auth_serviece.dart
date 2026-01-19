@@ -50,6 +50,12 @@ class AuthService {
         'therapiesCount': 0,
       }, SetOptions(merge: true));
     }
+    Future<String?> getCurrentUserFullName() async {
+      final u = currentUser;
+      if (u == null) return null;
+      final snap = await _db.collection('users').doc(u.uid).get();
+      return snap.data()?['fullName'] as String?;
+    }
 
     return cred;
   }

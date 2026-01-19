@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/booking/booking_store.dart';
 import '../../../core/booking/booking_models.dart';
 import 'therapist_profile_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
 
 class TherapistListScreen extends StatelessWidget {
   const TherapistListScreen({
     super.key,
     required this.patientId,
     required this.patientName,
+    required this.type,
   });
 
   final String patientId;
   final String patientName;
+  final SessionType type;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,10 @@ class TherapistListScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => TherapistProfileScreen(
-                    therapistId: t.id,
+                    therapistId: t.id, // ✅ fixed
                     patientId: patientId,
                     patientName: patientName,
+                    type: type, // ✅ forward the booking type
                   ),
                 ),
               );
@@ -47,7 +49,9 @@ class TherapistListScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outlineVariant,
+                ),
               ),
               child: Row(
                 children: [
@@ -60,15 +64,24 @@ class TherapistListScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(t.name, style: const TextStyle(fontWeight: FontWeight.w900)),
+                        Text(
+                          t.name,
+                          style: const TextStyle(fontWeight: FontWeight.w900),
+                        ),
                         const SizedBox(height: 4),
-                        Text("${t.locationText} • ⭐ ${t.rating} (${t.ratingCount})",
-                            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                        Text(
+                          "${t.locationText} • ⭐ ${t.rating} (${t.ratingCount})",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  Icon(Icons.chevron_right_rounded,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ],
               ),
             ),

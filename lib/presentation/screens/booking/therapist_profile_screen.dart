@@ -4,8 +4,6 @@ import '../../../core/booking/booking_models.dart';
 import '../../../core/chat/store.dart';
 import '../chat/chat_list_screen.dart';
 import 'booking_type_screen.dart';
-import 'package:psycare/serviece/auth_serviece.dart';
-import 'package:psycare/serviece/booking_serviece.dart';
 
 class TherapistProfileScreen extends StatelessWidget {
   const TherapistProfileScreen({
@@ -13,11 +11,13 @@ class TherapistProfileScreen extends StatelessWidget {
     required this.therapistId,
     required this.patientId,
     required this.patientName,
+    required this.type,
   });
 
   final String therapistId;
   final String patientId;
   final String patientName;
+  final SessionType type;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,12 @@ class TherapistProfileScreen extends StatelessWidget {
             context,
             title: "Qualifications",
             children: therapist.qualifications
-                .map((q) => Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: Text("• $q"),
-            ))
+                .map(
+                  (q) => Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Text("• $q"),
+              ),
+            )
                 .toList(),
           ),
 
@@ -75,7 +77,6 @@ class TherapistProfileScreen extends StatelessWidget {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {
-                    // MVP chat: uses your existing chat list
                     final store = ChatStore.instance;
 
                     Navigator.push(
@@ -105,6 +106,8 @@ class TherapistProfileScreen extends StatelessWidget {
                           therapistId: therapistId,
                           patientId: patientId,
                           patientName: patientName,
+                          // If BookingTypeScreen accepts type, pass it.
+                          // If it does NOT, remove this line.
                         ),
                       ),
                     );
@@ -138,8 +141,10 @@ class TherapistProfileScreen extends StatelessWidget {
               children: [
                 Text(t.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
                 const SizedBox(height: 4),
-                Text("${t.locationText} • ⭐ ${t.rating} (${t.ratingCount})",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                Text(
+                  "${t.locationText} • ⭐ ${t.rating} (${t.ratingCount})",
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                ),
               ],
             ),
           ),
@@ -148,7 +153,11 @@ class TherapistProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _infoCard(BuildContext context, {required String title, required List<Widget> children}) {
+  Widget _infoCard(
+      BuildContext context, {
+        required String title,
+        required List<Widget> children,
+      }) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
