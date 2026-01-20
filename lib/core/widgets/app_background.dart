@@ -20,11 +20,13 @@ class AppBackground extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.primaryTeal.withOpacity(0.08),
+                  AppColors.primaryTeal.withOpacity(0.05),
                   AppColors.scaffoldBackground,
+                  AppColors.primaryTeal.withOpacity(0.01),
                   AppColors.scaffoldBackground,
                 ],
-                stops: const [0.0, 0.35, 1.0],
+                // ✅ FIX: stops length must match colors length (4)
+                stops: const [0.0, 0.35, 0.70, 1.0],
               ),
             ),
           ),

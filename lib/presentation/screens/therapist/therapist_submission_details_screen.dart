@@ -4,9 +4,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/assessment/assessment_bank.dart';
 
-import 'package:psycare/service/auth_service.dart';
-import 'package:psycare/service/booking_service.dart';
-
 class TherapistSubmissionDetailsScreen extends StatelessWidget {
   const TherapistSubmissionDetailsScreen({
     super.key,

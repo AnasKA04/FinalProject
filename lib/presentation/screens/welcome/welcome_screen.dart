@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/models/user_role.dart';
 import '../../../core/navigation/app_transitions.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_assets.dart';
 import '../../../core/widgets/app_background.dart';
 import '../../../core/widgets/app_button.dart';
 import '../auth/login_screen.dart';
@@ -49,9 +50,9 @@ class WelcomeScreen extends StatelessWidget {
                   label: "Get Started",
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () {
-                    Navigator.of(context).push(
-                      AppTransitions.fadeSlide(const LoginScreen()),
-                    );
+                    Navigator.of(
+                      context,
+                    ).push(AppTransitions.fadeSlide(const LoginScreen()));
                   },
                 ),
 
@@ -59,10 +60,7 @@ class WelcomeScreen extends StatelessWidget {
                 Text(
                   "By continuing, you agree to a calm and safe experience.",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: textMuted,
-                    fontSize: 12.5,
-                  ),
+                  style: TextStyle(color: textMuted, fontSize: 12.5),
                 ),
                 const SizedBox(height: 6),
               ],
@@ -74,6 +72,10 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
+/* ===========================
+   Header with PsyCare Logo
+   =========================== */
+
 class _Header extends StatelessWidget {
   const _Header();
 
@@ -84,27 +86,37 @@ class _Header extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 44,
-          height: 44,
+          width: 64,
+          height: 64,
           decoration: BoxDecoration(
-            color: cs.primary.withOpacity(0.10),
-            borderRadius: BorderRadius.circular(14),
+            color: cs.primary.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(color: AppColors.border),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 10,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
-          child: Icon(Icons.favorite_rounded, color: cs.primary),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Image.asset(AppAssets.logo, fit: BoxFit.contain),
+          ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 14),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
               "PsyCare",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w900),
             ),
-            SizedBox(height: 2),
+            SizedBox(height: 4),
             Text(
               "A calm space for support",
-              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+              style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -112,6 +124,10 @@ class _Header extends StatelessWidget {
     );
   }
 }
+
+/* ===========================
+   Hero Card
+   =========================== */
 
 class _CalmHeroCard extends StatefulWidget {
   const _CalmHeroCard();
@@ -133,9 +149,12 @@ class _CalmHeroCardState extends State<_CalmHeroCard>
       vsync: this,
       duration: const Duration(milliseconds: 520),
     );
+
     final curved = CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
+
     _fade = Tween<double>(begin: 0, end: 1).animate(curved);
     _scale = Tween<double>(begin: 0.98, end: 1).animate(curved);
+
     _c.forward();
   }
 
@@ -224,6 +243,10 @@ class _CalmHeroCardState extends State<_CalmHeroCard>
     );
   }
 }
+
+/* ===========================
+   Soft Badge
+   =========================== */
 
 class _SoftBadge extends StatelessWidget {
   const _SoftBadge();

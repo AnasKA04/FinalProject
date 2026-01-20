@@ -7,9 +7,7 @@ import 'presentation/screens/welcome/welcome_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const PsyCareApp());
 }
 
@@ -22,12 +20,7 @@ class PsyCareApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'PsyCare',
 
-      // ✅ APPLY YOUR THEME (this kills the purple)
       theme: AppTheme.lightTheme,
-
-      // (optional) if you have a dark theme later:
-      // darkTheme: AppTheme.darkTheme,
-      // themeMode: ThemeMode.system,
 
       home: const WelcomeScreen(),
     );

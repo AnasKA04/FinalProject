@@ -40,11 +40,7 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     // Save/replace answer for current question
     _answers.removeWhere((a) => a.questionId == _currentId);
     _answers.add(
-      AssessmentAnswer(
-        questionId: _currentId,
-        choiceId: c.id,
-        score: c.score,
-      ),
+      AssessmentAnswer(questionId: _currentId, choiceId: c.id, score: c.score),
     );
 
     // Decide next
@@ -75,7 +71,10 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     });
   }
 
-  String? _nextQuestionId({required String currentQuestionId, required Choice choice}) {
+  String? _nextQuestionId({
+    required String currentQuestionId,
+    required Choice choice,
+  }) {
     // Hard-coded adaptive logic (safe and simple)
 
     // Gate sequence
@@ -105,7 +104,11 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     if (currentQuestionId == "anx_1") return "anx_2";
     if (currentQuestionId == "anx_2") {
       // If high anxiety, include safety gate
-      final anx = _scoreOf("gate_1") + _scoreOf("gate_2") + _scoreOf("anx_1") + _scoreOf("anx_2");
+      final anx =
+          _scoreOf("gate_1") +
+          _scoreOf("gate_2") +
+          _scoreOf("anx_1") +
+          _scoreOf("anx_2");
       if (anx >= 7) return "safety_1";
       return null;
     }
@@ -113,7 +116,11 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     // Mood module
     if (currentQuestionId == "mood_1") return "mood_2";
     if (currentQuestionId == "mood_2") {
-      final dep = _scoreOf("gate_3") + _scoreOf("gate_4") + _scoreOf("mood_1") + _scoreOf("mood_2");
+      final dep =
+          _scoreOf("gate_3") +
+          _scoreOf("gate_4") +
+          _scoreOf("mood_1") +
+          _scoreOf("mood_2");
       if (dep >= 7) return "safety_1";
       return null;
     }
@@ -138,7 +145,14 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     // => total usually 6–7
     final gateDone = _path.where((id) => id.startsWith("gate_")).length;
     final hasSafety = _path.contains("safety_1");
-    final moduleDone = _path.where((id) => id.startsWith("wb_") || id.startsWith("anx_") || id.startsWith("mood_")).length;
+    final moduleDone = _path
+        .where(
+          (id) =>
+              id.startsWith("wb_") ||
+              id.startsWith("anx_") ||
+              id.startsWith("mood_"),
+        )
+        .length;
 
     // Estimate: gates (4) + module max(2) + safety (maybe 1)
     final est = 4 + 2 + (hasSafety ? 1 : 0);
@@ -152,11 +166,18 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     if (_locked) return;
     setState(() => _locked = true);
 
-    final safetyAnswer = _answers.where((a) => a.questionId == "safety_1").toList();
-    final flaggedSafety = safetyAnswer.isNotEmpty && safetyAnswer.first.choiceId != "safe_no";
+    final safetyAnswer = _answers
+        .where((a) => a.questionId == "safety_1")
+        .toList();
+    final flaggedSafety =
+        safetyAnswer.isNotEmpty && safetyAnswer.first.choiceId != "safe_no";
 
     // Follow-up flag if any gate score is moderate/high
-    final gateTotal = _scoreOf("gate_1") + _scoreOf("gate_2") + _scoreOf("gate_3") + _scoreOf("gate_4");
+    final gateTotal =
+        _scoreOf("gate_1") +
+        _scoreOf("gate_2") +
+        _scoreOf("gate_3") +
+        _scoreOf("gate_4");
     final flaggedFollowUp = gateTotal >= 4 || flaggedSafety;
 
     final packet = AssessmentPacket(
@@ -204,7 +225,9 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
     }
 
     final total = _estimatedTotalSteps();
-    final progress = (total == 0) ? 0.0 : (_path.length / total).clamp(0.0, 1.0);
+    final progress = (total == 0)
+        ? 0.0
+        : (_path.length / total).clamp(0.0, 1.0);
 
     return Scaffold(
       appBar: AppBar(
@@ -229,7 +252,10 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
               const SizedBox(height: 18),
               Text(
                 question.title,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               const SizedBox(height: 10),
               Text(
@@ -238,17 +264,17 @@ class _AssessmentFlowScreenState extends State<AssessmentFlowScreen> {
               ),
               const SizedBox(height: 18),
               ...question.choices.map(
-                    (c) => Padding(
+                (c) => Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                    child:AppButton(
-                      label: c.text,
-                      isSecondary: true,
-                      onPressed: () {
-                        if (_locked) return;
-                        _select(c);
-                      },
-                    ),
+                  child: AppButton(
+                    label: c.text,
+                    isSecondary: true,
+                    onPressed: () {
+                      if (_locked) return;
+                      _select(c);
+                    },
                   ),
+                ),
               ),
               const Spacer(),
               Text(

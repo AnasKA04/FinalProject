@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../core/assessment/assessment_store.dart';
 import '../../../core/assessment/assessment_models.dart';
 import '../../../core/widgets/app_background.dart';
-import 'package:psycare/service/auth_service.dart';
-import 'package:psycare/service/booking_service.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key, required this.displayName});

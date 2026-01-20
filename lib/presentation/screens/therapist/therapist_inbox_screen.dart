@@ -3,9 +3,6 @@ import '../../../core/assessment/assessment_store.dart';
 import '../../../core/theme/app_colors.dart';
 import 'therapist_submission_details_screen.dart';
 
-import 'package:psycare/service/auth_service.dart';
-import 'package:psycare/service/booking_service.dart';
-
 class TherapistInboxScreen extends StatelessWidget {
   const TherapistInboxScreen({super.key});
 
